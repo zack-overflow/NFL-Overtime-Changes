@@ -1,4 +1,4 @@
-setwd("/Users/zacharyjohnson/Downloads/School/SportsAnalytics/Data")
+setwd("/Users/zacharyjohnson/Downloads/School/SportsAnalytics/project/NFL-Overtime-Changes/Data")
 winData <- read.csv(file="kickoffWon.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
 winKickoffs <- winData[(winData$Time == "15:00"), ]
 
