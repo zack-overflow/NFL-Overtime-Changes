@@ -3,8 +3,8 @@ import java.io.*;
 
 public class AddWinDiff {
 
-  Map<String, Integer> buildResultsMap(Scanner[] scanners) {
-    Map<String, Integer> winsMap = new HashMap<>();
+  Map<String, Double[]> buildResultsMap(Scanner[] scanners) {
+    Map<String, Double[]> winsMap = new HashMap<>();
 
     try {
       int season = 2007;
@@ -20,7 +20,7 @@ public class AddWinDiff {
     return winsMap;
   }
 
-  void processScanner(Scanner reader, Map<String, Integer> winsMap, int season) throws FileNotFoundException{
+  void processScanner(Scanner reader, Map<String, Double[]> winsMap, int season) throws FileNotFoundException{
     reader.nextLine();
     while (reader.hasNextLine()) {
       String line = reader.nextLine();
@@ -30,14 +30,19 @@ public class AddWinDiff {
       String[] teamArr = teamName.split(" ");
       String teamNameNoLoc = teamArr[(teamArr.length - 1)];
 
-      int wins = Integer.parseInt(arr[1]);
+      Double offRating = Double.parseDouble(arr[arr.length - 2]);
+      Double defRating = Double.parseDouble(arr[arr.length - 1]);
+
+      Double wins = (Integer.parseInt(arr[1]) * 1.0);
       String entry = season + teamNameNoLoc;
 
-      winsMap.put(entry, wins);
+      Double[] teamData = new Double[]{wins, offRating, defRating};
+
+      winsMap.put(entry, teamData);
     }
   }
 
-  void addWinDiffCol(Scanner reader, BufferedWriter writer, Map<String, Integer> winsMap) throws IOException{
+  void addWinDiffCol(Scanner reader, BufferedWriter writer, Map<String, Double[]> winsMap) throws IOException{
     reader.nextLine();
     while (reader.hasNextLine()) {
       String line = reader.nextLine();
@@ -57,11 +62,16 @@ public class AddWinDiff {
       String team1Entry = season + team1;
       String team2Entry = season + team2;
 
-      int team1Wins = winsMap.get(team1Entry);
-      int team2Wins = winsMap.get(team2Entry);
+      Double[] team1Data = winsMap.get(team1Entry);
+      Double[] team2Data = winsMap.get(team2Entry);
 
-      int winDiff = team1Wins - team2Wins;
-      writer.write(line + "," + winDiff + "\n");
+      Double winDiff = team1Data[0] - team2Data[0];
+      // Team one's offense compared to team 2's defense
+      Double team1Off2Def = team1Data[1] - team2Data[2];
+      //Team two's offense compared to team 1's defense
+      Double team2Off2Def = team1Data[2] - team2Data[1];
+
+      writer.write(line + "," + winDiff + "," + team1Off2Def + "," + team2Off2Def + "\n");
     }
   }
 
@@ -81,11 +91,11 @@ public class AddWinDiff {
           Scanner reader15 = new Scanner(new FileInputStream("Data/2015res.csv"));
           Scanner reader16 = new Scanner(new FileInputStream("Data/2016res.csv"));
           Scanner[] scanners = new Scanner[]{reader7, reader8, reader9, reader10, reader11, reader12, reader13, reader14, reader15, reader16};
-          Map<String, Integer> winsMap = builder.buildResultsMap(scanners);
+          Map<String, Double[]> winsMap = builder.buildResultsMap(scanners);
 
           for (String entry : winsMap.keySet()) {
-            int wins = winsMap.get(entry);
-            System.out.println(entry + ": " + wins);
+            Double[] data = winsMap.get(entry);
+            System.out.println(entry + ": " + data[0] + ", " + data[1] + ", " + data[2]);
           }
 
           Scanner readerWon = new Scanner(new FileInputStream("Data/kickoffWon.csv"));
