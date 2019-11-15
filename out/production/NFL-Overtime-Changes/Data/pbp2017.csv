@@ -1,0 +1,223 @@
+Date,Tm,Opp,Quarter,Time,Down,Yards,Location,Score,Detail,Yds,EPB,EPA,Diff
+2017-12-10,Colts,Bills,5,10:00,,0,CLT 35,7-7,Rigoberto Sanchez kicks off 51 yards returned by Brandon Tate for 10 yards,,0.000,-0.540,-0.54
+2017-12-10,Bills,Colts,5,9:53,1,10,BUF 24,7-7,LeSean McCoy right guard for -1 yards (tackle by Matthias Farley),-1,0.540,-0.140,-0.68
+2017-12-10,Bills,Colts,5,9:18,2,11,BUF 23,7-7,LeSean McCoy left guard for 1 yard (tackle by Johnathan Hankins),1,-0.140,-0.690,-0.55
+2017-12-10,Bills,Colts,5,8:39,3,10,BUF 24,7-7,Joe Webb left guard for 12 yards (tackle by T.J. Green),12,-0.690,1.330,2.02
+2017-12-10,Bills,Colts,5,8:02,1,10,BUF 36,7-7,LeSean McCoy right tackle for 1 yard (tackle by Jabaal Sheard),1,1.330,0.930,-0.40
+2017-12-10,Bills,Colts,5,7:23,2,9,BUF 37,7-7,Joe Webb middle for 4 yards (tackle by Jonathan Bostic),4,0.930,0.760,-0.17
+2017-12-10,Bills,Colts,5,6:50,3,5,BUF 41,7-7,Joe Webb right end for 9 yards (tackle by T.J. Green),9,0.760,2.260,1.50
+2017-12-10,Bills,Colts,5,6:31,1,10,50,7-7,LeSean McCoy right guard for -2 yards (tackle by Margus Hunt),-2,2.260,1.440,-0.82
+2017-12-10,Bills,Colts,5,5:49,2,12,BUF 48,7-7,LeSean McCoy right guard for 8 yards (tackle by Antonio Morrison),8,1.440,1.820,.38
+2017-12-10,Bills,Colts,5,5:03,3,4,CLT 44,7-7,Travaris Cadet middle for 3 yards (tackle by Johnathan Hankins),3,1.820,0.000,-1.82
+2017-12-10,Packers,Browns,5,10:00,,0,GNB 35,21-21,Mason Crosby kicks off 65 yards touchback,,0.000,-0.610,-0.61
+2017-12-10,Browns,Packers,5,10:00,1,10,CLE 25,21-21,Isaiah Crowell left guard for 1 yard (tackle by Mike Daniels and Ahmad Brooks),1,0.610,0.200,-0.41
+2017-12-10,Bills,Colts,5,4:13,4,1,CLT 41,7-7,Colton Schmidt punts 31 yards out of bounds,,0.530,0.380,-0.15
+2017-12-10,Browns,Packers,5,9:30,2,9,CLE 26,21-21,DeShone Kizer pass complete short right to Isaiah Crowell for 7 yards (tackle by Blake Martinez),7,0.200,0.430,.23
+2017-12-10,Browns,Packers,5,8:43,3,2,CLE 33,21-21,DeShone Kizer pass incomplete short middle intended for Seth Devalve is intercepted by Josh Jones at CLE-42,,0.430,-2.790,-3.22
+2017-12-10,Colts,Bills,5,4:07,1,10,CLT 10,7-7,Frank Gore right guard for 5 yards (tackle by Jerry Hughes),5,-0.380,-0.350,.03
+2017-12-10,Colts,Bills,5,3:35,2,5,CLT 15,7-7,Frank Gore middle for 10 yards (tackle by Matt Milano),10,-0.350,0.610,.96
+2017-12-10,Packers,Browns,5,8:28,1,10,CLE 42,21-21,Brett Hundley pass complete short middle to Jamaal Williams for 6 yards (tackle by James Burgess),6,2.790,3.050,.26
+2017-12-10,Colts,Bills,5,3:00,1,10,CLT 25,7-7,Jacoby Brissett pass incomplete short middle intended for Jack Doyle,,0.610,0.060,-0.55
+2017-12-10,Packers,Browns,5,7:53,2,4,CLE 36,21-21,Jamaal Williams right guard for 2 yards (tackle by Christian Kirksey),2,3.050,0.000,-3.05
+2017-12-10,Colts,Bills,5,2:55,2,10,CLT 25,7-7,Jacoby Brissett pass incomplete short right intended for T.Y. Hilton (defended by Kyle Williams),,0.060,-0.620,-0.68
+2017-12-10,Colts,Bills,5,2:50,3,10,CLT 25,7-7,Jacoby Brissett pass complete short right to Chester Rogers for 6 yards (tackle by Micah Hyde),6,-0.620,0.000,.62
+2017-12-10,Packers,Browns,5,7:12,3,2,CLE 34,21-21,Brett Hundley pass complete short middle to Davante Adams for 5 yards (tackle by Jason McCourty),5,2.610,3.640,1.03
+2017-12-10,Packers,Browns,5,6:34,1,10,CLE 29,21-21,Jamaal Williams left guard for 1 yard (tackle by Larry Ogunjobi),1,3.640,3.240,-0.40
+2017-12-10,Colts,Bills,5,2:35,4,4,CLT 31,7-7,Rigoberto Sanchez punts 34 yards,,-1.310,-1.270,.04
+2017-12-10,Packers,Browns,5,5:53,2,9,CLE 28,21-21,Brett Hundley pass complete short right to Randall Cobb for 3 yards (tackle by Jamar Taylor),3,3.240,0.000,-3.24
+2017-12-10,Bills,Colts,5,2:25,1,10,BUF 35,7-7,Joe Webb pass complete short right to Charles Clay for 1 yard (tackle by Matthias Farley),1,1.270,0.860,-0.41
+2017-12-10,Bills,Colts,5,2:21,2,9,BUF 36,7-7,Joe Webb right tackle for 3 yards (tackle by Jonathan Bostic and Antonio Morrison),3,0.860,0.560,-0.30
+2017-12-10,Packers,Browns,5,5:12,3,6,CLE 25,21-27,Brett Hundley pass complete short left to Davante Adams for 25 yards touchdown,25,2.940,7.000,4.06
+2017-12-10,Bills,Colts,5,2:00,3,6,BUF 39,7-7,Joe Webb pass complete deep right to Deonte Thompson for 34 yards,34,0.560,3.780,3.22
+2017-12-10,Bills,Colts,5,1:51,1,10,CLT 27,7-7,LeSean McCoy right guard for 9 yards (tackle by Jabaal Sheard),9,3.780,4.530,.75
+2017-12-10,Bills,Colts,5,1:46,2,1,CLT 18,7-7,LeSean McCoy middle for -3 yards (tackle by Quincy Wilson),-3,4.530,0.000,-4.53
+2017-12-10,Bills,Colts,5,1:39,3,4,CLT 21,13-7,LeSean McCoy middle for 21 yards touchdown,21,3.340,7.000,3.66
+2017-12-03,Buccaneers,Packers,5,10:00,,0,TAM 35,20-20,Patrick Murray kicks off 64 yards returned by Trevor Davis for 27 yards (tackle by Chris Godwin),,0.000,-0.810,-0.81
+2017-12-03,Packers,Buccaneers,5,9:53,1,10,GNB 28,20-20,Jamaal Williams right tackle for 2 yards (tackle by Keith Tandy),2,0.810,0.530,-0.28
+2017-12-03,Packers,Buccaneers,5,9:20,2,8,GNB 30,20-20,Jamaal Williams left tackle for 4 yards (tackle by Will Clarke),4,0.530,0.370,-0.16
+2017-12-03,Packers,Buccaneers,5,8:38,3,4,GNB 34,20-20,Brett Hundley for 7 yards (tackle by Keith Tandy),7,0.370,1.660,1.29
+2017-12-03,Packers,Buccaneers,5,8:04,1,10,GNB 41,20-20,Brett Hundley pass incomplete deep left intended for Jordy Nelson,,1.660,1.120,-0.54
+2017-12-03,Packers,Buccaneers,5,7:58,2,10,GNB 41,20-20,Brett Hundley right end for 18 yards (tackle by Lavonte David),18,1.120,2.850,1.73
+2017-12-03,Packers,Buccaneers,5,7:20,1,10,TAM 41,20-20,Jamaal Williams left tackle for 9 yards (tackle by Keith Tandy and Kwon Alexander),9,2.850,3.520,.67
+2017-12-03,Packers,Buccaneers,5,6:42,2,1,TAM 32,20-20,Brett Hundley pass complete short right to Jamaal Williams for 12 yards (tackle by Kwon Alexander),12,3.520,4.240,.72
+2017-12-03,Packers,Buccaneers,5,6:08,1,10,TAM 20,26-20,Aaron Jones left end for 20 yards touchdown,20,4.240,7.000,2.76
+2017-11-19,Giants,Chiefs,5,10:00,,0,NYG 35,9-9,Aldrick Rosas kicks off 61 yards returned by Akeem Hunt for 18 yards (tackle by Akeem Ayers),,0.000,-0.410,-0.41
+2017-11-19,Chiefs,Giants,5,9:53,1,10,KAN 22,9-9,Kareem Hunt middle for 2 yards (tackle by Damon Harrison and Calvin Munson),2,0.410,0.140,-0.27
+2017-11-19,Chiefs,Giants,5,9:07,2,8,KAN 24,9-9,Alex Smith pass complete short right to Ross Travis for 11 yards (tackle by Calvin Munson and Dominique Rodgers-Cromartie),11,0.140,1.270,1.13
+2017-11-19,Chiefs,Giants,5,8:36,1,10,KAN 35,9-9,Kareem Hunt left tackle for no gain (tackle by Olivier Vernon and Dalvin Tomlinson),0,1.270,0.720,-0.55
+2017-11-19,Chiefs,Giants,5,7:56,2,10,KAN 35,9-9,Kareem Hunt left tackle for 8 yards (tackle by Calvin Munson and Darian Thompson). Penalty on Laurent Duvernay-Tardif: Offensive Holding 10 yards,8,0.720,0.450,-0.27
+2017-11-19,Chiefs,Giants,5,7:34,2,12,KAN 33,9-9,Alex Smith pass complete short right to Tyreek Hill for 2 yards (tackle by Dominique Rodgers-Cromartie and Janoris Jenkins),2,0.450,0.040,-0.41
+2017-11-19,Chiefs,Giants,5,6:48,3,10,KAN 35,9-9,Alex Smith pass complete short right to Charcandrick West for 3 yards (tackle by Dominique Rodgers-Cromartie),3,0.040,-0.850,-0.89
+2017-11-19,Chiefs,Giants,5,6:06,4,7,KAN 38,9-9,Dustin Colquitt punts 52 yards returned by Kalif Raymond for 8 yards (tackle by Eric Murray),,-0.850,-0.040,.81
+2017-11-19,Giants,Chiefs,5,5:54,1,10,NYG 18,9-9,Orleans Darkwa right guard for 3 yards (tackle by Chris Jones and Rakeem Nunez-Roches),3,0.040,0.010,-0.03
+2017-11-19,Giants,Chiefs,5,5:13,2,7,NYG 21,9-9,Orleans Darkwa left guard for 10 yards (tackle by Reggie Ragland),10,0.010,1.000,.99
+2017-11-19,Giants,Chiefs,5,4:30,1,5,NYG 36,9-9,Eli Manning pass complete short left to Tavarres King for 13 yards (tackle by Daniel Sorensen),13,1.730,2.190,.46
+2017-11-19,Giants,Chiefs,5,4:16,1,10,NYG 49,9-9,Eli Manning pass complete short middle to Roger Lewis for 10 yards (tackle by Daniel Sorensen and Reggie Ragland),10,2.190,2.850,.66
+2017-11-19,Giants,Chiefs,5,3:35,1,10,KAN 41,9-9,Eli Manning pass complete short left to Wayne Gallman for 3 yards (tackle by Kevin Pierre-Louis),3,2.850,2.710,-0.14
+2017-11-19,Giants,Chiefs,5,3:00,2,7,KAN 38,9-9,Wayne Gallman right tackle for 2 yards (tackle by Justin Houston),2,2.710,2.280,-0.43
+2017-11-19,Giants,Chiefs,5,2:17,3,5,KAN 36,9-9,Eli Manning pass incomplete deep left intended for Evan Engram,,2.280,0.000,-2.28
+2017-11-19,Giants,Chiefs,5,2:12,4,5,KAN 36,9-9,Eli Manning pass complete deep left to Roger Lewis for 34 yards (tackle by Phillip Gaines). Penalty on Phillip Gaines: Defensive Pass Interference (Declined),34,0.880,6.740,5.86
+2017-11-19,Giants,Chiefs,5,1:58,1,2,KAN 2,9-9,Eli Manning kneels for -3 yards,-3,6.740,5.150,-1.59
+2017-11-19,Saints,Redskins,5,10:00,,0,NOR 35,31-31,Wil Lutz kicks off 65 yards touchback,,0.000,-0.610,-0.61
+2017-11-19,Giants,Chiefs,5,1:57,2,5,KAN 5,12-9,Aldrick Rosas 23 yard field goal good,,5.150,3.000,-2.15
+2017-11-19,Redskins,Saints,5,10:00,1,10,WAS 25,31-31,Kirk Cousins pass incomplete short left intended for Vernon Davis,,0.610,0.060,-0.55
+2017-11-19,Redskins,Saints,5,9:55,2,10,WAS 25,31-31,Kirk Cousins sacked by Cameron Jordan for -10 yards,-10,0.060,-2.350,-2.41
+2017-11-19,Redskins,Saints,5,9:11,3,20,WAS 15,31-31,Kirk Cousins pass incomplete short right intended for Samaje Perine,,-2.350,-2.440,-0.09
+2017-11-19,Redskins,Saints,5,9:05,4,20,WAS 15,31-31,Tress Way punts 60 yards returned by Tommylee Lewis for 14 yards (tackle by Joshua Holsey),,-2.440,-1.530,.91
+2017-11-19,Saints,Redskins,5,8:54,1,10,NOR 39,31-31,Mark Ingram left tackle for 20 yards (tackle by D.J. Swearinger),20,1.530,2.850,1.32
+2017-11-19,Saints,Redskins,5,8:09,1,10,WAS 41,31-31,Mark Ingram left end for 31 yards (tackle by Martrell Spaight),31,2.850,0.000,-2.85
+2017-11-19,Saints,Redskins,5,7:28,1,10,WAS 10,34-31,Wil Lutz 28 yard field goal good,,4.910,3.000,-1.91
+2017-11-12,Chargers,Jaguars,5,10:00,,0,SDG 35,17-17,Nick Novak kicks off 64 yards returned by Corey Grant for 28 yards (tackle by James Onwualu),,0.000,-0.870,-0.87
+2017-11-12,Jaguars,Chargers,5,9:51,1,10,JAX 29,17-17,Leonard Fournette left end for 4 yards (tackle by Darius Philon),4,0.870,0.870,.00
+2017-11-12,Jaguars,Chargers,5,9:18,2,6,JAX 33,17-17,Blake Bortles pass complete short right to Leonard Fournette for 8 yards,8,0.870,1.660,.79
+2017-11-12,Jaguars,Chargers,5,8:46,1,10,JAX 41,17-17,Blake Bortles pass complete short right to T.J. Yeldon for 9 yards (tackle by Jahleel Addae),9,1.660,2.340,.68
+2017-11-12,Jaguars,Chargers,5,8:08,2,1,50,17-17,Blake Bortles pass incomplete short middle intended for Keelan Cole,,2.340,1.620,-0.72
+2017-11-12,Jaguars,Chargers,5,8:02,3,1,50,17-17,Leonard Fournette middle for 1 yard (tackle by Jatavis Brown),1,1.620,2.320,.70
+2017-11-12,Jaguars,Chargers,5,7:22,1,10,SDG 49,17-17,Leonard Fournette middle for 2 yards (tackle by Jatavis Brown),2,2.320,2.050,-0.27
+2017-11-12,Jaguars,Chargers,5,6:37,2,8,SDG 47,17-17,Blake Bortles pass incomplete deep right intended for Marqise Lee,,2.050,1.360,-0.69
+2017-11-12,Jaguars,Chargers,5,6:30,3,8,SDG 47,17-17,Blake Bortles pass incomplete short right intended for Jaydon Mickens. Penalty on Josh Wells: Offensive Holding (Declined),0,1.360,0.130,-1.23
+2017-11-12,Jaguars,Chargers,5,6:22,4,8,SDG 47,17-17,Brad Nortman punts 37 yards fair catch by Travis Benjamin,,0.130,0.380,.25
+2017-11-12,Chargers,Jaguars,5,6:14,1,10,SDG 10,17-17,Philip Rivers pass complete short left to Melvin Gordon for 1 yard (tackle by Tashaun Gipson),1,-0.380,-0.710,-0.33
+2017-11-12,Chargers,Jaguars,5,5:37,2,9,SDG 11,17-17,Philip Rivers pass incomplete deep right intended for Keenan Allen,,-0.710,-1.300,-0.59
+2017-11-12,Chargers,Jaguars,5,5:31,3,9,SDG 11,17-17,Philip Rivers pass incomplete deep left intended for Travis Benjamin is intercepted by A.J. Bouye at JAX-47 and returned for 51 yards. Penalty on Aaron Colvin: Taunting 15 yards,,-1.300,-4.440,-3.14
+2017-11-12,Jaguars,Chargers,5,5:11,1,10,SDG 17,17-17,Leonard Fournette middle for 1 yard (tackle by Kyle Emanuel),1,4.440,4.000,-0.44
+2017-11-12,Jaguars,Chargers,5,4:39,2,9,SDG 16,17-17,Leonard Fournette middle for 1 yard (tackle by Melvin Ingram),1,4.000,3.340,-0.66
+2017-11-12,Jaguars,Chargers,5,3:54,3,8,SDG 15,17-17,Blake Bortles left end for -2 yards,-2,3.340,0.000,-3.34
+2017-11-12,Jaguars,Chargers,5,3:17,4,5,SDG 12,20-17,Josh Lambo 30 yard field goal good,,2.680,3.000,.32
+2017-10-22,Titans,Browns,5,10:00,,0,OTI 35,9-9,Ryan Succop kicks off 65 yards touchback,,0.000,-0.610,-0.61
+2017-10-22,Browns,Titans,5,10:00,1,10,CLE 25,9-9,Isaiah Crowell right guard for no gain (tackle by Da'Norris Searcy),0,0.610,0.060,-0.55
+2017-10-22,Browns,Titans,5,9:25,2,10,CLE 25,9-9,Cody Kessler pass incomplete deep right intended for Kenny Britt,,0.060,-0.620,-0.68
+2017-10-22,Browns,Titans,5,9:20,3,10,CLE 25,9-9,Cody Kessler pass incomplete short right intended for Kasen Williams,,-0.620,-1.700,-1.08
+2017-10-22,Browns,Titans,5,9:14,4,10,CLE 25,9-9,Britton Colquitt punts 38 yards returned by Adoree' Jackson for -1 yards (tackle by Matthew Dayes),,-1.700,-1.330,.37
+2017-10-22,Titans,Browns,5,9:05,1,10,OTI 36,9-9,Marcus Mariota pass complete short right to Delanie Walker for 16 yards (tackle by Christian Kirksey),16,1.330,2.390,1.06
+2017-10-22,Titans,Browns,5,8:16,1,20,OTI 42,9-9,Marcus Mariota pass incomplete short right intended for Derrick Henry,,1.730,0.500,-1.23
+2017-10-22,Titans,Browns,5,8:11,2,20,OTI 42,9-9,Marcus Mariota pass complete short middle to Jonnu Smith for 14 yards (tackle by Mike Jordan),14,0.500,0.000,-0.50
+2017-10-22,Titans,Browns,5,7:42,3,6,CLE 44,9-9,Marcus Mariota pass incomplete short left intended for Eric Decker (defended by Mike Jordan),,1.690,0.330,-1.36
+2017-10-22,Titans,Browns,5,7:37,4,6,CLE 44,9-9,Brett Kern punts 44 yards touchback,,0.330,-0.280,-0.61
+2017-10-22,Browns,Titans,5,7:30,1,10,CLE 20,9-9,Isaiah Crowell right guard for 2 yards (tackle by Jurrell Casey and Kevin Byard),2,0.280,0.000,-0.28
+2017-10-22,Browns,Titans,5,6:54,2,8,CLE 22,9-9,Cody Kessler pass incomplete,,0.000,-0.690,-0.69
+2017-10-22,Browns,Titans,5,6:48,3,8,CLE 22,9-9,Cody Kessler sacked by Brian Orakpo and Derrick Morgan for -12 yards,-12,-0.690,-2.490,-1.80
+2017-10-22,Browns,Titans,5,6:09,4,20,CLE 10,9-9,Britton Colquitt punts 53 yards returned by Adoree' Jackson for 9 yards (tackle by Dan Vitale). Penalty on Briean Boddy-Calhoun: Player Out of Bounds on Punt 5 yards,,-2.490,-2.320,.17
+2017-10-22,Titans,Browns,5,5:57,1,10,CLE 49,9-9,DeMarco Murray left guard for 7 yards (tackle by Danny Shelton),7,2.320,2.730,.41
+2017-10-22,Titans,Browns,5,5:24,2,3,CLE 42,9-9,DeMarco Murray right guard for no gain (tackle by Jamie Collins),0,2.730,2.020,-0.71
+2017-10-22,Titans,Browns,5,4:40,3,3,CLE 42,9-9,Marcus Mariota pass complete short right to Rishard Matthews for 8 yards (tackle by Jamar Taylor),8,2.020,3.310,1.29
+2017-10-22,Titans,Browns,5,4:05,1,10,CLE 34,9-9,DeMarco Murray right guard for 3 yards (tackle by Christian Kirksey),3,3.310,3.180,-0.13
+2017-10-22,Titans,Browns,5,3:27,2,7,CLE 31,9-9,Derrick Henry right tackle for 1 yard (tackle by Ibraheim Campbell),1,3.180,2.610,-0.57
+2017-10-22,Titans,Browns,5,2:49,3,6,CLE 30,9-9,DeMarco Murray left guard for 1 yard (tackle by Derrick Kindred),1,2.610,1.540,-1.07
+2017-10-22,Titans,Browns,5,2:00,4,5,CLE 29,9-12,Ryan Succop 47 yard field goal good,,1.540,3.000,1.46
+2017-10-15,Ravens,Bears,5,10:00,,0,RAV 35,24-24,Justin Tucker kicks off 68 yards returned by Tarik Cohen for 23 yards (tackle by Chris Matthews),,0.000,-0.280,-0.28
+2017-10-15,Bears,Ravens,5,9:55,1,10,CHI 20,24-24,Jordan Howard left tackle for 10 yards (tackle by Patrick Onwuasor),10,0.280,0.940,.66
+2017-10-15,Bears,Ravens,5,8:58,1,20,CHI 20,24-24,Mitch Trubisky sacked by Terrell Suggs and Willie Henry for -6 yards,-6,0.280,-1.900,-2.18
+2017-10-15,Bears,Ravens,5,8:13,2,26,CHI 14,24-24,Mitch Trubisky pass complete short right to Jordan Howard for 9 yards (tackle by Matt Judon),9,-1.900,-1.220,.68
+2017-10-15,Bears,Ravens,5,7:33,3,17,CHI 23,24-24,Mitch Trubisky right end for 9 yards (tackle by Anthony Levine),9,-1.220,-1.240,-0.02
+2017-10-15,Bears,Ravens,5,7:08,4,8,CHI 32,24-24,Pat O'Donnell punts 28 yards out of bounds,,-1.240,-1.600,-0.36
+2017-10-15,Ravens,Bears,5,7:04,1,10,RAV 40,24-24,Javorius Allen right guard for 6 yards (tackle by Eddie Goldman),6,1.600,1.860,.26
+2017-10-15,Ravens,Bears,5,6:32,2,4,RAV 46,24-24,Javorius Allen middle for 2 yards (tackle by Mitch Unrein),2,1.860,1.420,-0.44
+2017-10-15,Ravens,Bears,5,5:53,3,2,RAV 48,24-24,Joe Flacco pass incomplete short middle intended for Chris Moore,,1.420,-0.190,-1.61
+2017-10-15,Ravens,Bears,5,5:48,4,2,RAV 48,24-24,Sam Koch punts 45 yards,,-0.190,0.380,.57
+2017-10-15,Bears,Ravens,5,5:40,1,10,CHI 7,24-24,Jordan Howard left tackle for 53 yards (tackle by Brandon Carr),53,-0.380,2.920,3.30
+2017-10-15,Bears,Ravens,5,5:09,1,10,RAV 40,24-24,Tarik Cohen left guard for -1 yards (tackle by Eric Weddle),-1,2.920,2.240,-0.68
+2017-10-15,Bears,Ravens,5,5:09,2,11,RAV 41,24-24,Mitch Trubisky pass incomplete short left intended for Zach Miller,,2.240,1.550,-0.69
+2017-10-15,Bears,Ravens,5,4:26,3,11,RAV 41,24-24,Mitch Trubisky pass complete deep middle to Kendall Wright for 18 yards (tackle by Lardarius Webb),18,1.550,4.040,2.49
+2017-10-15,Bears,Ravens,5,3:43,1,10,RAV 23,24-24,Jordan Howard right guard for -2 yards (tackle by Willie Henry),-2,4.040,3.230,-0.81
+2017-10-15,Bears,Ravens,5,3:00,2,12,RAV 25,24-24,Jordan Howard left guard for 1 yard (tackle by Michael Pierce),1,3.230,2.680,-0.55
+2017-10-15,Bears,Ravens,5,2:16,3,11,RAV 24,24-24,Jordan Howard left tackle for 2 yards (tackle by Matt Judon),2,2.680,0.000,-2.68
+2017-10-15,Bears,Ravens,5,2:11,4,9,RAV 22,24-27,Connor Barth 40 yard field goal good,,1.990,3.000,1.01
+2017-10-08,49ers,Colts,5,10:00,,0,SFO 35,23-23,Bradley Pinion kicks off 65 yards touchback,,0.000,-0.610,-0.61
+2017-10-08,Colts,49ers,5,10:00,1,10,CLT 25,23-23,Jacoby Brissett right tackle for 1 yard (tackle by Ray-Ray Armstrong),1,0.610,0.200,-0.41
+2017-10-08,Colts,49ers,5,9:18,2,9,CLT 26,23-23,Frank Gore middle for no gain (tackle by Earl Mitchell),0,0.200,-0.490,-0.69
+2017-10-08,Colts,49ers,5,8:29,1,10,CLT 31,23-23,Marlon Mack right tackle for -1 yards (tackle by Dontae Johnson),-1,1.000,0.320,-0.68
+2017-10-08,Colts,49ers,5,7:55,2,11,CLT 30,23-23,Jacoby Brissett middle for 1 yard (tackle by Ray-Ray Armstrong),1,0.320,-0.230,-0.55
+2017-10-08,Colts,49ers,5,7:07,3,10,CLT 31,23-23,Jacoby Brissett pass complete short left to Donte Moncrief for 15 yards,15,-0.230,1.990,2.22
+2017-10-08,Colts,49ers,5,6:37,1,10,CLT 46,23-23,Jacoby Brissett pass complete deep right to T.Y. Hilton for 46 yards (tackle by Dontae Johnson),46,1.990,0.000,-1.99
+2017-10-08,Colts,49ers,5,5:44,1,8,SFO 8,23-23,Jacoby Brissett pass incomplete short middle intended for Darrell Daniels is intercepted by Ray-Ray Armstrong at SFO--1 and returned for 29 yards,,5.370,-0.810,-6.18
+2017-10-08,49ers,Colts,5,5:34,1,10,SFO 28,23-23,Matt Breida right tackle for no gain (tackle by Johnathan Hankins),0,0.810,0.260,-0.55
+2017-10-08,49ers,Colts,5,4:57,2,10,SFO 28,23-23,Brian Hoyer pass incomplete short left intended for Trent Taylor,,0.260,-0.430,-0.69
+2017-10-08,49ers,Colts,5,4:45,1,10,50,23-23,Brian Hoyer pass incomplete short left intended for Kyle Juszczyk (defended by Johnathan Hankins),,2.260,1.710,-0.55
+2017-10-08,49ers,Colts,5,4:35,2,20,SFO 40,23-23,Brian Hoyer pass complete short left to Aldrick Robinson for 5 yards (tackle by Darius Butler and Vontae Davis),5,0.360,0.370,.01
+2017-10-08,49ers,Colts,5,3:51,3,15,SFO 45,23-23,Brian Hoyer pass incomplete short left intended for Matt Breida,,0.370,-0.390,-0.76
+2017-10-08,49ers,Colts,5,3:45,4,15,SFO 45,23-23,Bradley Pinion punts 37 yards fair catch by Quan Bray,,-0.390,-0.040,.35
+2017-10-08,Colts,49ers,5,3:39,1,10,CLT 18,23-23,Jacoby Brissett pass incomplete short left intended for Kamar Aiken,,0.040,-0.490,-0.53
+2017-10-08,Colts,49ers,5,3:34,2,10,CLT 18,23-23,Jacoby Brissett pass complete short middle to Brandon Williams for 6 yards (tackle by Jaquiski Tartt and NaVorro Bowman),6,-0.490,-0.400,.09
+2017-10-08,Colts,49ers,5,2:55,3,4,CLT 24,23-23,Jacoby Brissett pass complete short left to Donte Moncrief for 7 yards (tackle by Dontae Johnson),7,-0.400,1.000,1.40
+2017-10-08,Colts,49ers,5,2:17,1,10,CLT 31,23-23,Marlon Mack right end for 35 yards (tackle by NaVorro Bowman),35,1.000,3.310,2.31
+2017-10-08,Colts,49ers,5,2:00,1,10,SFO 34,23-23,Frank Gore middle for no gain (tackle by D.J. Jones and Arik Armstead),0,3.310,0.000,-3.31
+2017-10-08,Colts,49ers,5,1:54,2,10,SFO 34,23-23,Jacoby Brissett pass incomplete deep right intended for Darrell Daniels (defended by Rashard Robinson),,2.770,2.080,-0.69
+2017-10-08,Colts,49ers,5,1:47,3,10,SFO 34,23-23,Robert Turbin middle for 1 yard (tackle by Jaquiski Tartt),1,2.080,0.000,-2.08
+2017-10-08,Colts,49ers,5,1:43,4,9,SFO 33,26-23,Adam Vinatieri 51 yard field goal good,,1.150,3.000,1.85
+2017-10-01,Jets,Jaguars,5,10:00,,0,NYJ 35,20-20,Chandler Catanzaro kicks off 65 yards touchback,,0.000,-0.610,-0.61
+2017-10-01,Jaguars,Jets,5,10:00,1,10,JAX 25,20-20,Leonard Fournette right end for 5 yards (tackle by Darron Lee),5,0.610,0.740,.13
+2017-10-01,Jaguars,Jets,5,9:24,2,5,JAX 30,20-20,Leonard Fournette middle for 1 yard (tackle by David Bass and Leonard Williams),1,0.740,0.170,-0.57
+2017-10-01,Jaguars,Jets,5,8:40,1,10,JAX 46,20-20,Blake Bortles pass incomplete short left intended for Keelan Cole (defended by Kony Ealy),,1.990,1.450,-0.54
+2017-10-01,Jaguars,Jets,5,8:35,2,10,JAX 46,20-20,Blake Bortles pass incomplete short right intended for Allen Hurns,,1.450,0.760,-0.69
+2017-10-01,Jaguars,Jets,5,8:29,3,10,JAX 46,20-20,Blake Bortles pass incomplete short left intended for Keelan Cole (defended by Juston Burris),,0.760,-0.320,-1.08
+2017-10-01,Jaguars,Jets,5,8:25,4,10,JAX 46,20-20,Brad Nortman punts 51 yards,,-0.320,0.380,.70
+2017-10-01,Jets,Jaguars,5,8:11,1,10,NYJ 3,20-20,Bilal Powell middle for 3 yards (tackle by Myles Jack),3,-0.380,-0.560,-0.18
+2017-10-01,Jets,Jaguars,5,7:33,2,7,NYJ 6,20-20,Josh McCown pass complete short right to Jermaine Kearse for 4 yards (tackle by Jalen Ramsey),4,-0.560,-0.600,-0.04
+2017-10-01,Jets,Jaguars,5,6:58,3,3,NYJ 10,20-20,Josh McCown pass incomplete short right intended for Jermaine Kearse (defended by Jalen Ramsey),,-0.600,-2.490,-1.89
+2017-10-01,Jets,Jaguars,5,6:55,4,3,NYJ 10,20-20,Lac Edwards punts 40 yards out of bounds,,-2.490,-2.260,.23
+2017-10-01,Cardinals,49ers,5,10:00,,0,CRD 35,12-12,Phil Dawson kicks off 70 yards returned by Victor Bolden for 27 yards (tackle by Justin Bethel),,0.000,-0.410,-0.41
+2017-10-01,Jaguars,Jets,5,6:48,1,10,50,20-20,Leonard Fournette middle for 1 yard (tackle by Demario Davis),1,2.260,1.850,-0.41
+2017-10-01,Jaguars,Jets,5,6:12,2,9,NYJ 49,20-20,Leonard Fournette left end for 6 yards (tackle by Demario Davis),6,1.850,0.000,-1.85
+2017-10-01,49ers,Cardinals,5,9:52,1,10,SFO 22,12-12,Carlos Hyde middle for 7 yards (tackle by Tyvon Branch). Carlos Hyde fumbles (forced by Tyvon Branch) recovered by Joe Staley at SFO-29,7,0.410,0.810,.40
+2017-10-01,49ers,Cardinals,5,9:17,2,3,SFO 29,12-12,Brian Hoyer pass incomplete short middle intended for Aldrick Robinson,,0.810,0.100,-0.71
+2017-10-01,Jaguars,Jets,5,5:26,3,3,NYJ 43,20-20,Blake Bortles pass incomplete short right intended for Marqise Lee,,1.950,0.400,-1.55
+2017-10-01,Jaguars,Jets,5,5:19,4,3,NYJ 43,20-20,Brad Nortman punts 34 yards fair catch by Jeremy Kerley,,0.400,0.380,-0.02
+2017-10-01,49ers,Cardinals,5,9:09,1,10,SFO 35,12-12,Matt Breida right tackle for no gain (tackle by Xavier Williams),0,1.270,0.720,-0.55
+2017-10-01,Jets,Jaguars,5,5:12,1,10,NYJ 9,20-20,Bilal Powell left guard for 3 yards (tackle by Telvin Smith),3,-0.380,-0.560,-0.18
+2017-10-01,49ers,Cardinals,5,8:32,2,10,SFO 35,12-12,Brian Hoyer pass complete short middle to Pierre Garcon for 11 yards (tackle by Tyrann Mathieu),11,0.720,1.990,1.27
+2017-10-01,Jets,Jaguars,5,4:34,2,7,NYJ 12,20-20,Josh McCown pass complete short right to Robby Anderson for 8 yards (tackle by A.J. Bouye),8,-0.560,0.280,.84
+2017-10-01,49ers,Cardinals,5,8:08,1,10,SFO 46,12-12,Matt Breida middle for 2 yards (tackle by Tyvon Branch and Frostee Rucker),2,1.990,1.720,-0.27
+2017-10-01,Jets,Jaguars,5,3:57,1,10,NYJ 20,20-20,Bilal Powell right tackle for 2 yards (tackle by Calais Campbell),2,0.280,0.000,-0.28
+2017-10-01,49ers,Cardinals,5,7:34,2,8,SFO 48,12-12,Brian Hoyer pass incomplete short right intended for Pierre Garcon (defended by Patrick Peterson),,1.720,1.030,-0.69
+2017-10-01,Jets,Jaguars,5,3:20,2,8,NYJ 22,20-20,Josh McCown pass incomplete deep left intended for Robby Anderson,,0.000,-0.690,-0.69
+2017-10-01,49ers,Cardinals,5,7:23,3,3,CRD 47,12-12,Brian Hoyer pass complete short left to Trent Taylor for 8 yards (tackle by Tyrann Mathieu),8,1.690,2.980,1.29
+2017-10-01,Jets,Jaguars,5,3:00,3,18,NYJ 12,20-20,Josh McCown pass complete short right to Bilal Powell for 13 yards (tackle by Dante Fowler),13,-2.360,-1.700,.66
+2017-10-01,49ers,Cardinals,5,6:45,1,10,CRD 39,12-12,Carlos Hyde middle for 2 yards (tackle by Tyrann Mathieu),2,2.980,2.710,-0.27
+2017-10-01,Jets,Jaguars,5,2:20,4,5,NYJ 25,20-20,Lac Edwards punts 70 yards returned by Marqise Lee for 5 yards (tackle by Julian Stanford). Penalty on Arrelious Benn: Illegal Block Above the Waist 2 yards,,-1.700,0.380,2.08
+2017-10-01,49ers,Cardinals,5,6:10,2,8,CRD 37,12-12,Brian Hoyer pass complete short right to Matt Breida for 4 yards (tackle by Karlos Dansby),4,2.710,2.540,-0.17
+2017-10-01,Jaguars,Jets,5,2:06,1,10,JAX 3,20-20,Leonard Fournette left guard for -1 yards (tackle by Darron Lee),-1,-0.380,-0.850,-0.47
+2017-10-01,49ers,Cardinals,5,5:29,3,4,CRD 33,12-12,Kyle Juszczyk middle for 8 yards (tackle by Patrick Peterson and Tyvon Branch),8,2.540,3.910,1.37
+2017-10-01,Jaguars,Jets,5,2:00,2,11,JAX 2,20-20,Leonard Fournette left guard for no gain (tackle by Jordan Jenkins),0,-0.850,0.000,.85
+2017-10-01,49ers,Cardinals,5,4:49,1,10,CRD 25,12-12,Carlos Hyde middle for 1 yard (tackle by Josh Mauro),1,3.910,3.500,-0.41
+2017-10-01,49ers,Cardinals,5,4:37,2,9,CRD 24,12-12,Brian Hoyer pass complete short right to Kyle Juszczyk for 7 yards (tackle by Tyvon Branch),7,3.500,3.850,.35
+2017-10-01,Jaguars,Jets,5,1:55,3,11,JAX 2,20-20,Blake Bortles pass incomplete deep left intended for Marcedes Lewis,,-1.540,-2.490,-0.95
+2017-10-01,49ers,Cardinals,5,3:52,3,2,CRD 17,12-12,Brian Hoyer pass complete short right to Carlos Hyde for 9 yards (tackle by Haason Reddick),9,3.850,5.370,1.52
+2017-10-01,Jaguars,Jets,5,1:50,4,11,JAX 2,20-20,Brad Nortman punts 45 yards returned by Jeremy Kerley for 7 yards. Penalty on Paul Posluszny: Unsportsmanlike Conduct 15 yards,,-2.490,-3.910,-1.42
+2017-10-01,49ers,Cardinals,5,3:12,1,8,CRD 8,12-12,Carlos Hyde middle for -4 yards (tackle by Tyvon Branch),-4,5.370,0.000,-5.37
+2017-10-01,Jets,Jaguars,5,1:38,1,10,JAX 25,20-20,Bilal Powell left guard for 1 yard (tackle by Calais Campbell),1,3.910,0.000,-3.91
+2017-10-01,49ers,Cardinals,5,3:07,2,12,CRD 12,12-12,Carlos Hyde middle for 7 yards (tackle by Tyvon Branch),7,3.860,4.260,.40
+2017-10-01,Jets,Jaguars,5,1:15,2,9,JAX 24,20-20,Elijah McGuire left guard for 1 yard (tackle by Telvin Smith),1,3.500,2.940,-0.56
+2017-10-01,49ers,Cardinals,5,2:33,3,5,CRD 5,12-12,Brian Hoyer pass incomplete,,4.260,3.010,-1.25
+2017-10-01,Jets,Jaguars,5,0:34,3,8,JAX 23,20-20,Josh McCown spiked the ball,0,2.940,1.930,-1.01
+2017-10-01,49ers,Cardinals,5,2:28,4,5,CRD 5,12-15,Robbie Gould 23 yard field goal good,,3.010,3.000,-0.01
+2017-10-01,Jets,Jaguars,5,0:32,4,8,JAX 23,23-20,Chandler Catanzaro 41 yard field goal good,,1.930,3.000,1.07
+2017-10-01,49ers,Cardinals,5,2:24,,0,SFO 35,12-15,Bradley Pinion kicks off 65 yards touchback,,0.000,-0.610,-0.61
+2017-10-01,Cardinals,49ers,5,2:24,1,10,CRD 25,12-15,Carson Palmer pass complete short middle to Andre Ellington for 11 yards (tackle by Dontae Johnson and K'Waun Williams),11,0.610,1.330,.72
+2017-10-01,Cardinals,49ers,5,2:00,1,10,CRD 36,12-15,Carson Palmer pass complete short middle to Andre Ellington for 11 yards (tackle by Jaquiski Tartt and K'Waun Williams),11,1.330,2.060,.73
+2017-10-01,Cardinals,49ers,5,1:55,1,10,CRD 47,12-15,Carson Palmer pass complete deep left to Jaron Brown for 17 yards (tackle by Lorenzo Jerome),17,2.060,3.180,1.12
+2017-10-01,Cardinals,49ers,5,1:37,1,10,SFO 36,12-15,Carson Palmer pass complete short left to Jaron Brown for 11 yards (tackle by Dontae Johnson),11,3.180,3.910,.73
+2017-10-01,Cardinals,49ers,5,1:17,1,10,SFO 25,12-15,Carson Palmer pass incomplete deep right intended for John Brown (defended by Rashard Robinson),,3.910,3.360,-0.55
+2017-10-01,Cardinals,49ers,5,0:59,1,10,SFO 27,12-15,Carson Palmer pass complete short left to Andre Ellington for 8 yards (tackle by Jimmie Ward),8,3.780,4.350,.57
+2017-10-01,Cardinals,49ers,5,0:38,2,2,SFO 19,18-15,Carson Palmer pass complete deep right to Larry Fitzgerald for 19 yards touchdown,19,4.350,7.000,2.65
+2017-09-24,Packers,Bengals,5,10:00,,0,GNB 35,24-24,Mason Crosby kicks off 65 yards touchback,,0.000,0.000,.00
+2017-09-24,Steelers,Bears,5,10:00,,0,PIT 35,17-17,Chris Boswell kicks off 57 yards returned by Deonte Thompson for 18 yards (tackle by Anthony Chickillo),,0.000,-0.670,-0.67
+2017-09-24,Bears,Steelers,5,9:53,1,10,CHI 26,17-17,Jordan Howard right end for 1 yard (tackle by Tyson Alualu),1,0.670,0.270,-0.40
+2017-09-24,Bears,Steelers,5,9:14,2,9,CHI 27,17-17,Tarik Cohen for 36 yards,36,0.270,3.120,2.85
+2017-09-24,Bengals,Packers,5,10:00,1,10,CIN 25,24-24,Joe Mixon right tackle for -2 yards (tackle by Blake Martinez),-2,0.610,-0.210,-0.82
+2017-09-24,Bears,Steelers,5,8:51,1,10,PIT 37,17-17,Jordan Howard left end for 18 yards (tackle by Mike Mitchell),18,3.120,0.000,-3.12
+2017-09-24,Bengals,Packers,5,9:19,2,12,CIN 23,24-24,Andy Dalton pass complete short middle to A.J. Green for 6 yards (tackle by Josh Jones),6,-0.210,-0.100,.11
+2017-09-24,Bengals,Packers,5,8:31,3,6,CIN 29,24-24,Andy Dalton pass complete short right to Tyler Kroft for 1 yard (tackle by Josh Jones),1,-0.100,-1.370,-1.27
+2017-09-24,Bears,Steelers,5,8:34,1,10,PIT 19,23-17,Jordan Howard left tackle for 19 yards touchdown,19,4.310,7.000,2.69
+2017-09-24,Bengals,Packers,5,7:54,4,5,CIN 30,24-24,Kevin Huber punts 58 yards returned by Trevor Davis for 9 yards (tackle by Clayton Fejedelem),,-1.370,-0.340,1.03
+2017-09-24,Packers,Bengals,5,7:39,1,10,GNB 21,24-24,Aaron Rodgers pass incomplete short left intended for Jordy Nelson,,0.340,-0.200,-0.54
+2017-09-24,Packers,Bengals,5,7:34,2,10,GNB 21,24-24,Aaron Rodgers pass incomplete short right intended for Ty Montgomery,,-0.200,-0.890,-0.69
+2017-09-24,Packers,Bengals,5,7:30,3,10,GNB 21,24-24,Aaron Rodgers pass complete deep left to Geronimo Allison for 72 yards (tackle by Josh Shaw). Penalty on Michael Johnson: Defensive Offside (Declined),72,-0.890,5.600,6.49
+2017-09-24,Packers,Bengals,5,6:59,1,7,CIN 7,24-24,Aaron Rodgers right end for -2 yards (tackle by Carlos Dunlap),-2,5.600,0.000,-5.60
+2017-09-24,Packers,Bengals,5,6:26,2,9,CIN 9,27-24,Mason Crosby 27 yard field goal good,,4.380,3.000,-1.38
+2017-09-17,Cardinals,Colts,5,10:00,,0,CRD 35,13-13,Phil Dawson kicks off 69 yards returned by Quan Bray for 30 yards (tackle by Justin Bethel),,0.000,-0.670,-0.67
+2017-09-17,Colts,Cardinals,5,9:55,1,10,CLT 26,13-13,Jacoby Brissett pass incomplete short middle intended for Kamar Aiken is intercepted by Tyrann Mathieu at IND-36 and returned for 15 yards,,0.670,-4.170,-4.84
+2017-09-17,Cardinals,Colts,5,9:47,1,10,CLT 21,13-13,Chris Johnson left tackle for 1 yard (tackle by John Simon),1,4.170,3.760,-0.41
+2017-09-17,Cardinals,Colts,5,9:15,2,9,CLT 20,13-13,Kerwynn Williams middle for 3 yards (tackle by John Simon),3,3.760,3.460,-0.30
+2017-09-17,Cardinals,Colts,5,8:39,3,6,CLT 17,13-13,Andre Ellington middle for 5 yards (tackle by Matthias Farley),5,3.460,2.780,-0.68
+2017-09-17,Cardinals,Colts,5,8:05,4,1,CLT 12,13-16,Phil Dawson 30 yard field goal good,,2.780,3.000,.22
