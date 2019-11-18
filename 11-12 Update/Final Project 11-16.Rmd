@@ -1,0 +1,190 @@
+---
+title: "Project Final"
+author: "John Cho"
+date: "11/6/2019"
+output: pdf_document
+---
+```{r}
+library(dplyr)
+library(lubridate)
+library(pscl)
+library(stringr)
+```
+
+#2012-2016 Seasons
+
+## Post Rule Change Wins: 2012-2016 Seasons
+```{r}
+postWin <- read.csv(file="wonAppendedUPD.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+postWinKickoffs <- postWin[(postWin$Time == "15:00"), ]
+
+##Adds the Home team variable
+postHometeam <- read.csv(file="12-16home.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+postHometeam <- postHometeam %>% 
+  filter(At.Symbol == "@") %>% 
+  filter(!grepl("T", Result))
+postHometeam$Date <- format(mdy(postHometeam$Date), "%Y-%m-%d")
+
+postWinKickoffs <- postWinKickoffs %>% 
+  mutate(Home = 0) %>% 
+  mutate(TeamRating = Team1RatingDiff - Team2RatingDiff)
+  
+
+sizePostWinKickoffs = length(postWinKickoffs$Date)
+sizePostHometeam = length(postHometeam$Date)
+
+for(i in 1:sizePostWinKickoffs){
+  for (j in 1:sizePostHometeam){
+    if(postWinKickoffs$Date[i] == postHometeam$Date[j] & postWinKickoffs$Team[i] == postHometeam$Opp[j]){
+            postWinKickoffs$Home[i] = 1
+    }
+  }
+}
+
+
+#postWinKickoffs <- postWinKickoffs %>% 
+#  mutate(Win = 0)
+#postWinKickoffs$Win <- ifelse(postWinKickoffs$Team == postWinKickoffs$Home, 1, 0)
+```
+
+## Post Rule Change Losses: 2012-2016 Seasons
+```{r}
+postLost <- read.csv(file="lostAppendedUPD.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+postLostKickoffs <- postLost[(postLost$Time == "15:00"), ]
+
+##Adds the Home team variable
+postLostKickoffs <- postLostKickoffs %>% 
+  mutate(Home = 0) %>% 
+  mutate(WinDiff = -WinDiff) %>% 
+  mutate(TeamRating = Team2RatingDiff - Team1RatingDiff)
+
+sizePostLostKickoffs = length(postLostKickoffs$Date)
+
+for(i in 1:sizePostLostKickoffs){
+  for (j in 1:sizePostHometeam){
+    if(postLostKickoffs$Date[i] == postHometeam$Date[j] & postLostKickoffs$Opp[i] == postHometeam$Opp[j]){
+            postLostKickoffs$Home[i] = 1
+    }
+  }
+}
+
+#postLostKickoffs$Win <- ifelse(postLostKickoffs$Opp == postLostKickoffs$CoinToss, 1, 0)
+```
+
+
+##Post Rule Changed Combined for Wins and Losses
+```{r}
+postKickoffs <- rbind(postWinKickoffs, postLostKickoffs)
+postKickoffs <- postKickoffs %>% 
+  arrange(desc(Date), Team) %>% 
+  mutate(Post = 1)
+
+mean(postLostKickoffs$WinDiff)
+mean(postWinKickoffs$WinDiff)
+```
+
+```{r}
+postKickoffs <- postKickoffs %>% 
+  mutate(CoinTossBinary = 0)
+
+for(i in 1:sizePostHometeam){
+  for (j in 1:sizePostHometeam){
+    if(postKickoffs$Date[i] == postHometeam$Date[j] & postKickoffs$CoinToss[i] == postHometeam$Opp[j]){
+            postKickoffs$CoinTossBinary[i] = 1
+    }
+  }
+}
+```
+
+#2007-2011 Seasons
+## Pre Rule Change Wins: 2007-2011 Seasons
+```{r}
+preWinKickoffs <- read.csv(file="07-11WonAppendedUPD.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+##Adds the Home team variable
+preHometeam <- read.csv(file="7-11home.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+preHometeam <- preHometeam %>% 
+  filter(At.Symbol == "@") %>% 
+  filter(!grepl("T", Result))
+preHometeam$Date <- format(mdy(preHometeam$Date), "%Y-%m-%d")
+
+preWinKickoffs <- preWinKickoffs %>% 
+  mutate(Home = 0) %>% 
+  mutate(TeamRating = Team1RatingDiff - Team2RatingDiff)
+
+sizePreWinKickoffs = length(preWinKickoffs$Date)
+sizePreHometeam = length(preHometeam$Date)
+
+for(i in 1:sizePreWinKickoffs){
+  for (j in 1:sizePreHometeam){
+    if(preWinKickoffs$Date[i] == preHometeam$Date[j] & preWinKickoffs$Team[i] == preHometeam$Opp[j]){
+            preWinKickoffs$Home[i] = 1
+    }
+  }
+}
+```
+
+## Pre Rule Change Losses: 2007-2011 Seasons
+```{r}
+preLostKickoffs <- read.csv(file="07-11LostAppendedUPD.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+##Adds the Home team variable
+preLostKickoffs <- preLostKickoffs %>% 
+  mutate(Home = 0) %>% 
+  mutate(WinDiff = -WinDiff) %>% 
+  mutate(TeamRating = Team2RatingDiff - Team1RatingDiff)
+
+sizePreLostKickoffs = length(preLostKickoffs$Date)
+
+for(i in 1:sizePreLostKickoffs){
+  for (j in 1:sizePreHometeam){
+    if(preLostKickoffs$Date[i] == preHometeam$Date[j] & preLostKickoffs$Opp[i] == preHometeam$Opp[j]){
+            preLostKickoffs$Home[i] = 1
+    }
+  }
+}
+```
+
+##Pre Rule Changed Combined for Wins and Losses
+```{r}
+preKickoffs <- rbind(preWinKickoffs, preLostKickoffs)
+preKickoffs <- preKickoffs %>% 
+  arrange(desc(Date), Team) %>% 
+  mutate(Post = 0)
+
+mean(preLostKickoffs$WinDiff)
+mean(preWinKickoffs$WinDiff)
+```
+```{r}
+preKickoffs <- preKickoffs %>% 
+  mutate(CoinTossBinary = 0)
+
+for(i in 1:sizePreHometeam){
+  for (j in 1:sizePreHometeam){
+    if(preKickoffs$Date[i] == preHometeam$Date[j] & preKickoffs$CoinToss[i] == preHometeam$Opp[j]){
+            preKickoffs$CoinTossBinary[i] = 1
+    }
+  }
+}
+```
+
+```{r}
+Kickoffs <- rbind(preKickoffs, postKickoffs)
+Kickoffs <- Kickoffs %>% 
+  arrange(Date, Team)
+```
+
+#Models
+##Binary Logit Model
+```{r}
+logitnew <- glm(Home ~ WinDiff + WinDiff*Post + CoinTossBinary,
+                data=Kickoffs,
+                family=binomial(link="logit"))
+logit.1 <- glm(Home ~ WinDiff + Post*WinDiff + CoinTossBinary, 
+               data=Kickoffs, 
+               family=binomial(link="logit"))
+
+summary(logitnew)
+```
