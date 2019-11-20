@@ -7,6 +7,6 @@ output: pdf_document
 
 ``` {r checkDataset}
 
-fullData <- read.csv(file="Data/07-11Combined.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+preData <- read.csv(file="Data/07-11Combined.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
 postData <- read.csv(file="Data/12-16Combined.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
 ```

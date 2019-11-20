@@ -117,7 +117,7 @@ public class AddWinDiff {
       // Team one's offense compared to team 2's defense
       Double team1Off2Def = team1Data[1] - team2Data[2];
       //Team two's offense compared to team 1's defense
-      Double team2Off1Def = team1Data[2] - team2Data[1];
+      Double team2Off1Def = team2Data[1] - team1Data[2];
       Double combinedRating = team1Off2Def - team2Off1Def;
 
       writer.write(line + "," + winDiff + "," + combinedRating + "," + wonToss + "\n");
