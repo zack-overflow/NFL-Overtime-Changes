@@ -1,0 +1,237 @@
+---
+title: "Final Project"
+author: "John Cho"
+date: "11/20/2019"
+output: pdf_document
+---
+```{r}
+library(dplyr)
+library(lubridate)
+library(pscl)
+library(stringr)
+library(arm)
+options(scipen = 999)
+```
+
+#Data Recodes
+##Post Rule Change (12-16)
+```{r}
+post <- read.csv(file="12-16CombinedUsed.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+post <- post %>% 
+  filter(At.Symbol != "@") %>% 
+  filter(!grepl("T", Result)) %>% 
+  mutate(Win = grepl("W", Result)) %>% 
+  mutate(CoinWin = 0) %>% 
+  mutate(Post = 1) %>%
+  rename(Away = Opp) %>% 
+  rename(Home = Tm) %>% 
+  arrange(desc(Date), Home)
+
+post$Win[post$Win == "TRUE"] <- 1
+post$Win[post$Win == "FALSE"] <- 0
+for(i in 1:length(post$Date)){
+  if(post$OTToss[i] == post$Home[i]){
+    post$CoinWin[i] = 1
+  }
+}
+```
+
+
+```{r}
+postVegas <- read.csv(file="12-16VegasOdds.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+postVegas <- postVegas %>% 
+  filter(!grepl("T", postVegas$Result)) %>% 
+  mutate(Home = Tm) %>% 
+  mutate(Away = Opp)
+postVegas$Date <- format(mdy(postVegas$Date), "%Y-%m-%d")
+
+for(i in 1:length(postVegas$Date)){
+  if(postVegas$X[i] == "@"){
+    postVegas$Away[i] = postVegas$Tm[i]
+    postVegas$Home[i] = postVegas$Opp[i]
+    postVegas$Spread[i] = -postVegas$Spread[i]
+  }
+}
+
+postVegas <- postVegas %>% 
+  arrange(desc(Date), Home)
+post <- post %>% 
+  mutate(Vegas = postVegas$Spread)
+
+detach("package:dplyr", character.only = TRUE)
+library("dplyr", character.only = TRUE)
+post <- select(post, c(Date, Year, Home, Away, Win, CoinWin, Post, WinDiff, CombinedRating, Vegas, 
+                       Week, Game, Day))
+```
+
+
+##Pre Rule Change (07-11)
+```{r}
+pre <- read.csv(file="07-11CombinedUsed.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+pre <- pre %>% 
+  filter(At.Symbol != "@") %>% 
+  filter(!grepl("T", Result)) %>% 
+  mutate(Win = grepl("W", Result)) %>% 
+  mutate(CoinWin = 0) %>% 
+  mutate(Post = 0) %>% 
+  rename(Away = Opp) %>% 
+  rename(Home = Tm) %>% 
+  arrange(desc(Date), Home)
+
+pre$CombinedRating <- round(pre$CombinedRating, digits = 4)
+
+pre$Win[pre$Win == "TRUE"] <- 1
+pre$Win[pre$Win == "FALSE"] <- 0
+for(i in 1:length(pre$Date)){
+  if(pre$OTToss[i] == pre$Home[i]){
+    pre$CoinWin[i] = 1
+  }
+}
+```
+
+```{r}
+preVegas <- read.csv(file="07-11VegasOdds.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+preVegas <- preVegas %>% 
+  filter(!grepl("T", preVegas$Result)) %>% 
+  mutate(Home = Tm) %>% 
+  mutate(Away = Opp)
+preVegas$Date <- format(mdy(preVegas$Date), "%Y-%m-%d")
+
+for(i in 1:length(preVegas$Date)){
+  if(preVegas$X[i] == "@"){
+    preVegas$Away[i] = preVegas$Tm[i]
+    preVegas$Home[i] = preVegas$Opp[i]
+    preVegas$Spread[i] = -preVegas$Spread[i]
+  }
+}
+
+preVegas <- preVegas %>% 
+  arrange(desc(Date), Home)
+pre <- pre %>% 
+  mutate(Vegas = preVegas$Spread)
+
+pre <- select(pre, c(Date, Year, Home, Away, Win, CoinWin, Post, WinDiff, CombinedRating, Vegas, 
+                     Week, Game, Day))
+```
+
+
+##Combine the Post and Pre into Data
+```{r}
+data <- rbind(post, pre)
+data <- data %>% 
+  arrange(desc(Date), Home)
+```
+
+#Models
+##Chi-Sq Test
+```{r}
+wins <- table(data$CoinWin == 1, data$Win == 1)
+wins
+
+chisq.test(wins)
+```
+
+##Logit Model - Win Diff
+```{r}
+logit.wins <- glm(Win ~ Post*WinDiff+ Post*CoinWin, 
+               data=data, 
+               family=binomial(link="logit"))
+
+summary(logit.wins)
+```
+
+##Create Profile Data Frame and Pretty Visualization for Win Difference 
+```{r}
+xb.list <- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+xb.profile <- c(1, 0, 0, 0, 0, 0) #you can change these to make a different profile
+xb.logit <- c(logit.wins$coef[1], logit.wins$coef[2], logit.wins$coef[3],
+              logit.wins$coef[4], logit.wins$coef[5], logit.wins$coef[6])
+xb.df <- data.frame(xb.list, xb.profile, xb.logit)
+```
+
+```{r}
+xb.logit.out <- sum(xb.profile * xb.logit)
+xb.logit.out
+invlogit(xb.logit.out) #this gives you the PROBABILITY not just the beta
+```
+
+
+```{r}
+iv.list<- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+logit.wins.beta <- c(logit.wins$coef[1],logit.wins$coef[2], logit.wins$coef[3],
+                  logit.wins$coef[4], logit.wins$coef[5],logit.wins$coef[6])
+logit.wins.se <- c(sqrt(vcov(logit.wins)[1,1]), sqrt(vcov(logit.wins)[2,2]),
+                sqrt(vcov(logit.wins)[3,3]), sqrt(vcov(logit.wins)[4,4]),
+                sqrt(vcov(logit.wins)[5,5]),sqrt(vcov(logit.wins)[6,6]))
+logit.wins.df <- data.frame(iv.list, logit.wins.beta, logit.wins.se)
+logit.wins.df$fd <- apply(logit.wins.df, 1, function(x){
+  invlogit(xb.logit.out + logit.wins.beta) - invlogit(xb.logit.out)} )
+logit.wins.df$fduci <- apply(logit.wins.df, 1, function(x){
+  invlogit(xb.logit.out + logit.wins.beta - 1.96*logit.wins.se) - invlogit(xb.logit.out)} )
+logit.wins.df$fdlci <- apply(logit.wins.df, 1, function(x){
+  invlogit(xb.logit.out + logit.wins.beta + 1.96*logit.wins.se) - invlogit(xb.logit.out)} )
+logit.wins.order <- logit.wins.df[order(logit.wins.beta), ]
+
+invlogit(xb.logit.out + logit.wins.beta[4]) - invlogit(xb.logit.out)
+```
+###This Creates the visualization of a ONE UNIT CHANGE in each Beta
+```{r}
+library(Hmisc)
+errbar(logit.wins.order$iv.list, logit.wins.order$fd, logit.wins.order$fdlci, logit.wins.order$fduci)
+abline(v=0, col="gray")
+```
+
+## Logit Model - Team Rating
+```{r}
+logit.rating <- glm(Win ~ Post*CombinedRating+ Post*CoinWin, 
+               data=data, 
+               family=binomial(link="logit"))
+
+summary(logit.rating)
+```
+
+##Logit Model - Vegas
+```{r}
+logit.vegas <- glm(Win ~ Post*Vegas+ Post*CoinWin, 
+               data=data, 
+               family=binomial(link="logit"))
+
+summary(logit.vegas)
+```
+
+##Recalculate Statistical Significance for Post Betas
+```{r}
+windiff.beta <- logit.wins$coeff[3] + logit.wins$coeff[5]
+windiff.beta
+
+windiff.se <- sqrt(vcov(logit.wins)[3,3] + (1)^2*vcov(logit.wins)[5,5] + 2*(1)*vcov(logit.wins)[3,5])
+windiff.se
+
+tvalwindiff <- windiff.beta/windiff.se
+tvalwindiff
+
+
+pvalwindiff <- 2*pnorm(-abs(tvalwindiff))
+pvalwindiff
+```
+
+```{r}
+cointoss.beta <- logit.wins$coeff[4] + logit.wins$coeff[6]
+cointoss.beta
+
+cointoss.se <- sqrt(vcov(logit.wins)[4,4] + (1)^2*vcov(logit.wins)[6,6] + 2*(1)*vcov(logit.wins)[4,6])
+cointoss.se
+
+tvalcointoss <- cointoss.beta/cointoss.se
+tvalcointoss
+
+
+pvalcointoss <- 2*pnorm(-abs(tvalcointoss))
+pvalcointoss
+```
