@@ -42,22 +42,59 @@ public class AddWinDiff {
     }
   }
 
-  void addWinDiffCol(Scanner reader, BufferedWriter writer, Map<String, Double[]> winsMap, Map<String, String> tossMap) throws IOException{
+  Map<String, String> getTeamAbb() {
+      Map<String, String> teamAbbreviations = new HashMap<>();
+      teamAbbreviations.put("ARI", "Cardinals");
+      teamAbbreviations.put("ATL", "Falcons");
+      teamAbbreviations.put("BAL", "Ravens");
+      teamAbbreviations.put("BUF", "Bills");
+      teamAbbreviations.put("CAR", "Panthers");
+      teamAbbreviations.put("CHI", "Bears");
+      teamAbbreviations.put("CIN", "Bengals");
+      teamAbbreviations.put("CLE", "Browns");
+      teamAbbreviations.put("DAL", "Cowboys");
+      teamAbbreviations.put("DEN", "Broncos");
+      teamAbbreviations.put("DET", "Lions");
+      teamAbbreviations.put("GNB", "Packers");
+      teamAbbreviations.put("HOU", "Texans");
+      teamAbbreviations.put("IND", "Colts");
+      teamAbbreviations.put("JAX", "Jaguars");
+      teamAbbreviations.put("KAN", "Chiefs");
+      teamAbbreviations.put("SDG", "Chargers");
+      teamAbbreviations.put("STL", "Rams");
+      teamAbbreviations.put("MIA", "Dolphins");
+      teamAbbreviations.put("MIN", "Vikings");
+      teamAbbreviations.put("NWE", "Patriots");
+      teamAbbreviations.put("NOR", "Saints");
+      teamAbbreviations.put("NYG", "Giants");
+      teamAbbreviations.put("NYJ", "Jets");
+      teamAbbreviations.put("OAK", "Raiders");
+      teamAbbreviations.put("PHI", "Eagles");
+      teamAbbreviations.put("PIT", "Steelers");
+      teamAbbreviations.put("SEA", "Seahawks");
+      teamAbbreviations.put("SFO", "49ers");
+      teamAbbreviations.put("TAM", "Buccaneers");
+      teamAbbreviations.put("TEN", "Titans");
+      teamAbbreviations.put("WAS", "Redskins");
+
+      return teamAbbreviations;
+  }
+
+  void addToData(Scanner reader, BufferedWriter writer, Map<String, String> tossMap, Map<String, Double[]> winsMap) throws IOException{
+
+    Map<String, String> teamAbb = getTeamAbb();
+    writer.write("Rk,Tm,Year,Date,Time,LTime,,Opp,Week,G#,Day,Result,OT" + ",WinDiff,CombinedRating,OTToss" + "\n");
+
     reader.nextLine();
     while (reader.hasNextLine()) {
       String line = reader.nextLine();
       String[] arr = line.split(",");
 
-      String team1 = arr[1];
-      String team2 = arr[2];
+      String team1 = teamAbb.get(arr[1]);
+      String team2 = teamAbb.get(arr[7]);
 
-      String date = arr[0];
-      String[] splitDate = date.split("-");
-      int season = Integer.parseInt(splitDate[0]);
-      String month = splitDate[1];
-      if (month.equals("01")) {
-        season--;
-      }
+      String season = arr[2];
+      String date = arr[3];
 
       String team1Entry = season + team1;
       String team2Entry = season + team2;
@@ -67,14 +104,23 @@ public class AddWinDiff {
 
       String gameEntry = date + "/" + team1 + "/" + team2;
       String wonToss = tossMap.get(gameEntry);
+      if (wonToss == null) {
+          String gameEntryRev = date + "/" + team2 + "/" + team1;
+          wonToss = tossMap.get(gameEntryRev);
+          if (wonToss == null) {
+              System.out.println("Didn't find:" + gameEntry + "or " + gameEntryRev);
+          }
+      }
 
       Double winDiff = team1Data[0] - team2Data[0];
+
       // Team one's offense compared to team 2's defense
       Double team1Off2Def = team1Data[1] - team2Data[2];
       //Team two's offense compared to team 1's defense
-      Double team2Off2Def = team1Data[2] - team2Data[1];
+      Double team2Off1Def = team1Data[2] - team2Data[1];
+      Double combinedRating = team1Off2Def - team2Off1Def;
 
-      writer.write(line + "," + winDiff + "," + team1Off2Def + "," + team2Off2Def + "," + wonToss + "\n");
+      writer.write(line + "," + winDiff + "," + combinedRating + "," + wonToss + "\n");
     }
   }
 
@@ -82,13 +128,13 @@ public class AddWinDiff {
     {
         AddWinDiff builder = new AddWinDiff();
 
+        GetLinks linkGetter = new GetLinks();
+        Scrape scrape = new Scrape();
 
         try {
-          GetLinks linkGetter = new GetLinks();
-          Scrape scrape = new Scrape();
-
           Map<String, String> links = linkGetter.getLinks();
           scrape.scrape(links);
+
           Scanner reader7 = new Scanner(new FileInputStream("Data/2007res.csv"));
           Scanner reader8 = new Scanner(new FileInputStream("Data/2008res.csv"));
           Scanner reader9 = new Scanner(new FileInputStream("Data/2009res.csv"));
@@ -102,30 +148,27 @@ public class AddWinDiff {
           Scanner[] scanners = new Scanner[]{reader7, reader8, reader9, reader10, reader11, reader12, reader13, reader14, reader15, reader16};
           Map<String, Double[]> winsMap = builder.buildResultsMap(scanners);
 
+          // coin toss
+          for (String entry : links.keySet()) {
+            System.out.println(entry + ": " + links.get(entry));
+          }
+          System.out.println(links.size());
+
+          // wins, offRating, defRating
           for (String entry : winsMap.keySet()) {
             Double[] data = winsMap.get(entry);
             System.out.println(entry + ": " + data[0] + ", " + data[1] + ", " + data[2]);
           }
 
-          Scanner readerWon = new Scanner(new FileInputStream("Data/kickoffWon.csv"));
-          BufferedWriter writerWon = new BufferedWriter(new FileWriter("Data/wonAppended.csv"));
-          builder.addWinDiffCol(readerWon, writerWon, winsMap, links);
-          writerWon.close();
+          Scanner readerNew = new Scanner(new FileInputStream("Data/07-11.csv"));
+          BufferedWriter writerPre = new BufferedWriter(new FileWriter("Data/07-11Combined.csv"));
+          builder.addToData(readerNew, writerPre, links, winsMap);
+          writerPre.close();
 
-          Scanner readerLost = new Scanner(new FileInputStream("Data/kickoffLost.csv"));
-          BufferedWriter writerLost = new BufferedWriter(new FileWriter("Data/lostAppended.csv"));
-          builder.addWinDiffCol(readerLost, writerLost, winsMap, links);
-          writerLost.close();
-
-          Scanner readerWon07 = new Scanner(new FileInputStream("Data/07-11KickoffWon.csv"));
-          BufferedWriter writerWon07 = new BufferedWriter(new FileWriter("Data/07-11WonAppended.csv"));
-          builder.addWinDiffCol(readerWon07, writerWon07, winsMap, links);
-          writerWon07.close();
-
-          Scanner readerLost07 = new Scanner(new FileInputStream("Data/07-11KickoffLost.csv"));
-          BufferedWriter writerLost07 = new BufferedWriter(new FileWriter("Data/07-11LostAppended.csv"));
-          builder.addWinDiffCol(readerLost07, writerLost07, winsMap, links);
-          writerLost07.close();
+          Scanner readerNewPost = new Scanner(new FileInputStream("Data/12-16.csv"));
+          BufferedWriter writerPost = new BufferedWriter(new FileWriter("Data/12-16Combined.csv"));
+          builder.addToData(readerNewPost, writerPost, links, winsMap);
+          writerPost.close();
 
         } catch (IOException e) {
           System.out.println("There was an error reading or writing the files");

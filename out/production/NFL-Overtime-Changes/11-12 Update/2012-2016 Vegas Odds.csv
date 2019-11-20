@@ -1,0 +1,84 @@
+﻿Rk,Tm,Year,Date,Time,LTime,,Opp,Week,G#,Day,Result,,vs. Line,Over/Under,OU Result,Spread
+1,Steelers,2016,1/1/17,1:00,1:00,,Browns,17,16,Sun,W 27-24,,push,41.5,over,-3
+2,Bills,2016,12/24/16,1:00,1:00,,Dolphins,16,15,Sat,L 31-34,,not covered,44.5,over,-4.5
+3,49ers,2016,12/11/16,4:05,1:05,,Jets,14,13,Sun,L 17-23,,not covered,42.5,under,-3
+4,Broncos,2016,11/27/16,8:30,6:30,,Chiefs,12,11,Sun,L 27-30,,not covered,40,over,-3.5
+5,Vikings,2016,11/6/16,1:00,3:00,,Lions,9,8,Sun,L 16-22,,not covered,42.5,under,-4.5
+6,Bengals,2016,10/30/16,8:36,1:36,,Redskins,8,8,Sun,T 27-27,,not covered,49,over,-3
+7,Cowboys,2016,10/30/16,8:31,7:31,,Eagles,8,7,Sun,W 29-23,,covered,44,over,-5
+8,Buccaneers,2016,10/30/16,1:02,1:02,,Raiders,8,7,Sun,L 24-30,,not covered,48,over,-1
+9,Falcons,2016,10/23/16,4:05,4:05,,Chargers,7,7,Sun,L 30-33,,not covered,52.5,over,-4.5
+10,Cardinals,2016,10/23/16,8:30,5:30,,Seahawks,7,7,Sun,T 6-6,,not covered,43,under,-2.5
+11,Texans,2016,10/16/16,8:32,7:32,,Colts,6,6,Sun,W 26-23,,push,47.5,over,-3
+12,Dolphins,2016,9/25/16,1:02,1:02,,Browns,3,3,Sun,W 30-24,,not covered,42,over,-10
+13,Chiefs,2016,9/11/16,1:05,12:05,,Chargers,1,1,Sun,W 33-27,,not covered,45.5,over,-6.5
+14,Rams,2015,1/3/16,4:25,1:25,@,49ers,17,16,Sun,L 16-19,,not covered,37.5,under,-3.5
+15,Broncos,2015,12/28/15,8:30,6:30,,Bengals,16,15,Mon,W 20-17,,push,39.5,under,-3
+16,Patriots,2015,12/27/15,1:02,1:02,@,Jets,16,15,Sun,L 20-26,,not covered,45,over,-3
+17,Raiders,2015,12/24/15,8:26,5:26,,Chargers,16,15,Thu,W 23-20,,not covered,46.5,under,-6
+18,Bears,2015,12/6/15,1:02,12:02,,49ers,13,12,Sun,L 20-26,,not covered,43.5,over,-6.5
+19,Jets,2015,12/6/15,1:03,1:03,@,Giants,13,12,Sun,W 23-20,,covered,46.5,under,-2.5
+20,Patriots,2015,11/29/15,8:30,6:30,@,Broncos,12,11,Sun,L 24-30,,not covered,43.5,over,-2.5
+21,Vikings,2015,11/8/15,1:02,12:02,,Rams,9,8,Sun,W 21-18,,covered,40,under,-1
+22,Saints,2015,11/8/15,1:02,12:02,,Titans,9,9,Sun,L 28-34,,not covered,48,over,-7.5
+23,Eagles,2015,11/8/15,8:31,7:31,@,Cowboys,9,8,Sun,W 33-27,,covered,43.5,over,-3
+24,Panthers,2015,11/2/15,8:30,8:30,,Colts,8,7,Mon,W 29-26,,not covered,46.5,over,-6.5
+25,Falcons,2015,11/1/15,1:02,1:02,,Buccaneers,8,8,Sun,L 20-23,,not covered,48.5,under,-7
+26,Broncos,2015,10/18/15,1:02,1:02,@,Browns,6,6,Sun,W 26-23,,not covered,42,over,-3.5
+27,Lions,2015,10/18/15,1:02,1:02,,Bears,6,6,Sun,W 37-34,,push,44,over,-3
+28,Falcons,2015,10/11/15,1:02,1:02,,Redskins,5,5,Sun,W 25-19,,not covered,48,under,-7
+29,Bengals,2015,10/11/15,1:03,1:03,,Seahawks,5,5,Sun,W 27-24,,push,43.5,over,-3
+30,Ravens,2015,10/11/15,1:02,1:02,,Browns,5,5,Sun,L 30-33,,not covered,42.5,over,-6
+31,Colts,2015,10/4/15,1:02,1:02,,Jaguars,4,4,Sun,W 16-13,,not covered,48,under,-9.5
+32,Saints,2015,10/4/15,8:30,7:30,,Cowboys,4,4,Sun,W 26-20,,covered,48,under,-3
+33,Ravens,2015,10/1/15,8:26,8:26,@,Steelers,4,4,Thu,W 23-20,,covered,43.5,under,-2.5
+34,Seahawks,2015,9/13/15,1:00,12:00,@,Rams,1,1,Sun,L 31-34,,not covered,40.5,over,-4
+35,49ers,2014,12/20/14,8:26,5:26,,Chargers,16,15,Sat,L 35-38,,not covered,40.5,over,-1.5
+36,Vikings,2014,12/7/14,1:02,12:02,,Jets,14,13,Sun,W 30-24,,covered,40,over,-4.5
+37,Saints,2014,11/9/14,1:03,12:03,,49ers,10,9,Sun,L 24-27,,not covered,49,over,-5.5
+38,Cowboys,2014,10/27/14,8:30,7:30,,Redskins,8,8,Mon,L 17-20,,not covered,49,under,-9.5
+39,Buccaneers,2014,10/26/14,1:03,1:03,,Vikings,8,7,Sun,L 13-19,,not covered,43,under,-1.5
+40,Bengals,2014,10/12/14,1:03,1:03,,Panthers,6,5,Sun,T 37-37,,not covered,44,over,-7
+41,Cowboys,2014,10/5/14,1:03,12:03,,Texans,5,5,Sun,W 20-17,,not covered,47,under,-6.5
+42,Saints,2014,10/5/14,1:03,12:03,,Buccaneers,5,5,Sun,W 37-31,,not covered,48,over,-10
+43,Seahawks,2014,9/21/14,4:25,1:25,,Broncos,3,3,Sun,W 26-20,,covered,48.5,under,-4.5
+44,Bears,2014,9/7/14,1:00,12:00,,Bills,1,1,Sun,L 20-23,,not covered,47,under,-7
+45,Saints,2014,9/7/14,1:03,1:03,@,Falcons,1,1,Sun,L 34-37,,not covered,51.5,over,-3
+46,Chargers,2013,12/29/13,4:26,1:26,,Chiefs,17,16,Sun,W 27-24,,not covered,45,over,-14.5
+47,Lions,2013,12/22/13,4:05,4:05,,Giants,16,15,Sun,L 20-23,,not covered,47,under,-9
+48,Cardinals,2013,12/15/13,4:27,3:27,@,Titans,15,14,Sun,W 37-34,,push,43,over,-3
+49,Bills,2013,12/1/13,4:05,4:05,,Falcons,13,12,Sun,L 31-34,,not covered,48,over,-4.5
+50,Vikings,2013,12/1/13,1:05,12:05,,Bears,13,12,Sun,W 23-20,,covered,48.5,under,-1
+51,Broncos,2013,11/24/13,8:30,8:30,@,Patriots,12,11,Sun,L 31-34,,not covered,54,over,-2.5
+52,Packers,2013,11/24/13,1:02,12:02,,Vikings,12,11,Sun,T 26-26,,not covered,44.5,over,-5.5
+53,Bears,2013,11/17/13,1:02,12:02,,Ravens,11,10,Sun,W 23-20,,not covered,40.5,over,-3.5
+54,Ravens,2013,11/10/13,1:02,1:02,,Bengals,10,9,Sun,W 20-17,,covered,44,under,-2
+55,Chargers,2013,11/3/13,1:03,1:03,@,Redskins,9,8,Sun,L 24-30,,not covered,49.5,over,0
+56,Seahawks,2013,11/3/13,4:05,1:05,,Buccaneers,9,9,Sun,W 27-24,,not covered,40,over,-14.5
+58,Bengals,2013,10/31/13,8:29,8:29,@,Dolphins,9,9,Thu,L 20-22,,not covered,42,push,-3
+59,Patriots,2013,10/20/13,1:03,1:03,@,Jets,7,7,Sun,L 27-30,,not covered,43,over,-3
+60,Bengals,2013,10/13/13,1:02,1:02,@,Bills,6,6,Sun,W 27-24,,not covered,41,over,-6
+61,Seahawks,2013,9/29/13,1:03,12:03,@,Texans,4,4,Sun,W 23-20,,covered,41,over,-2
+62,Texans,2013,9/15/13,1:03,12:03,,Titans,2,2,Sun,W 30-24,,not covered,42.5,over,-9
+63,Cowboys,2012,12/23/12,1:02,12:02,,Saints,16,15,Sun,L 31-34,,not covered,54.5,over,-3
+64,Steelers,2012,12/16/12,4:25,3:25,@,Cowboys,15,14,Sun,L 24-27,,not covered,46,over,-2.5
+65,Redskins,2012,12/9/12,1:03,1:03,,Ravens,14,13,Sun,W 31-28,,covered,48,over,-1.5
+66,Bears,2012,12/2/12,1:03,12:03,,Seahawks,13,12,Sun,L 17-23,,not covered,37,over,-3.5
+67,49ers,2012,12/2/12,1:00,12:00,@,Rams,13,12,Sun,L 13-16,,not covered,41,under,-8
+68,Ravens,2012,11/25/12,4:05,1:05,@,Chargers,12,11,Sun,W 16-13,,covered,47,under,-1
+69,Texans,2012,11/22/12,12:39,12:39,@,Lions,12,11,Thu,W 34-31,,not covered,49,over,-4
+70,Cowboys,2012,11/18/12,1:04,12:04,,Browns,11,10,Sun,W 23-20,,not covered,43.5,under,-7
+71,Texans,2012,11/18/12,1:03,12:03,,Jaguars,11,10,Sun,W 43-37,,not covered,40.5,over,-15.5
+72,Buccaneers,2012,11/18/12,1:04,1:04,@,Panthers,11,10,Sun,W 27-21,,covered,47,over,-1.5
+73,Steelers,2012,11/12/12,8:40,8:40,,Chiefs,10,9,Mon,W 16-13,,not covered,40,under,-13
+74,49ers,2012,11/11/12,4:25,1:25,,Rams,10,9,Sun,T 24-24,,not covered,38,over,-13
+75,Titans,2012,10/28/12,1:06,12:06,,Colts,8,8,Sun,L 13-19,,not covered,47,under,-3
+76,Patriots,2012,10/21/12,4:25,4:25,,Jets,7,7,Sun,W 29-26,,not covered,47,over,-10.5
+77,Raiders,2012,10/21/12,4:25,1:25,,Jaguars,7,6,Sun,W 26-23,,not covered,44,over,-6
+78,Cardinals,2012,10/14/12,4:05,1:05,,Bills,6,6,Sun,L 16-19,,not covered,44,under,-5
+79,Eagles,2012,10/14/12,1:03,1:03,,Lions,6,6,Sun,L 23-26,,not covered,47.5,over,-3.5
+80,Cardinals,2012,9/30/12,4:05,1:05,,Dolphins,4,4,Sun,W 24-21,,not covered,39.5,over,-4
+81,Lions,2012,9/23/12,1:03,12:03,@,Titans,3,3,Sun,L 41-44,,not covered,47,over,-4
+82,Saints,2012,9/23/12,1:02,12:02,,Chiefs,3,3,Sun,L 24-27,,not covered,51.5,under,-8.5
+83,Jets,2012,9/23/12,1:03,1:03,@,Dolphins,3,3,Sun,W 23-20,,push,40.5,over,-3
+84,Vikings,2012,9/9/12,1:05,12:05,,Jaguars,1,1,Sun,W 26-23,,not covered,38,over,-3.5

@@ -1,0 +1,255 @@
+---
+title: "Project Final"
+author: "John Cho"
+date: "11/6/2019"
+output: pdf_document
+---
+```{r}
+library(dplyr)
+library(lubridate)
+library(pscl)
+library(stringr)
+```
+
+#2012-2016 Seasons
+## Post Rule Change Wins: 2012-2016 Seasons
+```{r}
+postWin <- read.csv(file="wonAppended.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+postWinKickoffs <- postWin[(postWin$Time == "15:00"), ]
+
+##Double-counts the data by taking the Opponents column and giving them a 0 for the Win binary variable
+postWinKickoffsL <- select(postWinKickoffs, c(Date, Opp, WinDiff, Team2RatingDiff))
+postWinKickoffsL$Win <- rep(0, nrow(postWinKickoffs))
+postWinKickoffsL <- postWinKickoffsL %>% 
+  rename(Team = Opp) %>% 
+  rename(TeamRatingDiff = Team2RatingDiff) %>% 
+  mutate(WinDiff = -WinDiff)
+
+##Combines the postWinKickoffsL with postWinKickoffs data so it has both loss and win teams
+postWinKickoffs$Win <- rep(1, nrow(postWinKickoffs))
+postWinKickoffs <- postWinKickoffs %>% 
+  select(c(Date, Team, WinDiff, Team1RatingDiff, Win)) %>%
+  rename(TeamRatingDiff = Team1RatingDiff) %>% 
+  rbind(postWinKickoffsL) %>% 
+  arrange(desc(Date), Team)
+postWinKickoffs$Kickoff <- rep(1, nrow(postWinKickoffs))
+
+##Adds the Home team variable
+postHometeam <- read.csv(file="12-16home.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+postHometeam <- postHometeam %>% 
+  filter(At.Symbol == "@") %>% 
+  filter(!grepl("T", Result))
+postHometeam$Date <- format(mdy(postHometeam$Date), "%Y-%m-%d")
+
+postWinKickoffs <- postWinKickoffs %>% 
+  mutate(Home = 0)
+
+sizePostWinKickoffs = length(postWinKickoffs$Date)
+sizePostHometeam = length(postHometeam$Date)
+
+for(i in 1:sizePostWinKickoffs){
+  for (j in 1:sizePostHometeam){
+    if(postWinKickoffs$Date[i] == postHometeam$Date[j] & postWinKickoffs$Team[i] == postHometeam$Opp[j]){
+            postWinKickoffs$Home[i] = 1
+    }
+  }
+}
+```
+
+## Post Rule Change Losses: 2012-2016 Seasons
+```{r}
+postLost <- read.csv(file="lostAppended.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+postLostKickoffs <- postLost[(postLost$Time == "15:00"), ]
+
+##Double-counts the data by taking the Opponents column and giving them a 0 for the Win binary variable
+postLostKickoffsL <- select(postLostKickoffs, c(Date, Opp, WinDiff, Team2RatingDiff))
+postLostKickoffsL$Win <- rep(0, nrow(postLostKickoffs))
+postLostKickoffsL <- postLostKickoffsL %>% 
+  rename(Team = Opp) %>% 
+  rename(TeamRatingDiff = Team2RatingDiff) %>% 
+  mutate(WinDiff = -WinDiff)
+
+##Combines the postLostKickoffsL with postLostKickoffs data so it has both loss and win teams
+postLostKickoffs$Win <- rep(1, nrow(postLostKickoffs))
+postLostKickoffs <- postLostKickoffs %>% 
+  select(c(Date, Team, WinDiff, Team1RatingDiff, Win)) %>%
+  rename(TeamRatingDiff = Team1RatingDiff) %>% 
+  rbind(postLostKickoffsL) %>% 
+  arrange(desc(Date), Team)
+postLostKickoffs$Kickoff <- rep(0, nrow(postLostKickoffs))
+
+##Adds the Home team variable
+postLostKickoffs <- postLostKickoffs %>% 
+  mutate(Home = 0)
+
+sizePostLostKickoffs = length(postLostKickoffs$Date)
+
+for(i in 1:sizePostLostKickoffs){
+  for (j in 1:sizePostHometeam){
+    if(postLostKickoffs$Date[i] == postHometeam$Date[j] & postLostKickoffs$Team[i] == postHometeam$Opp[j]){
+            postLostKickoffs$Home[i] = 1
+    }
+  }
+}
+```
+
+##Post Rule Changed Combined for Wins and Losses
+```{r}
+postKickoffs <- rbind(postWinKickoffs, postLostKickoffs)
+postKickoffs <- postKickoffs %>% 
+  arrange(Date, Team)
+```
+
+##Putting Vegas Odds in for 2012-2016 Years
+```{r}
+postVegas <- read.csv(file="2012-2016 Vegas Odds.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+postVegas <- postVegas %>% 
+  filter(!grepl("T", postVegas$Result))
+postVegas$Date <- format(mdy(postVegas$Date), "%Y-%m-%d")
+
+postVegasUnder <- select(postVegas, c(Date, Opp, Spread))
+postVegasUnder <- postVegasUnder %>% 
+  mutate(Spread = -Spread) %>% 
+  rename(Tm = Opp)
+
+postVegas <- postVegas %>% 
+  select(c(Date, Tm, Spread)) %>% 
+  rbind(postVegasUnder) %>% 
+  arrange(Date, Tm)
+
+postKickoffs <- postKickoffs %>% 
+  mutate(postVegas$Spread) %>% 
+  rename("Spread" = "postVegas$Spread")
+```
+
+#2007-2011 Seasons
+## Pre Rule Change Wins: 2007-2011 Seasons
+```{r}
+preWinKickoffs <- read.csv(file="07-11WonAppended.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+##Double-counts the data by taking the Opponents column and giving them a 0 for the Win binary variable
+preWinKickoffsL <- select(preWinKickoffs, c(Date, Opp, WinDiff, Team2RatingDiff))
+preWinKickoffsL$Win <- rep(0, nrow(preWinKickoffs))
+preWinKickoffsL <- preWinKickoffsL %>% 
+  rename(Team = Opp) %>% 
+  rename(TeamRatingDiff = Team2RatingDiff) %>% 
+  mutate(WinDiff = -WinDiff)
+
+##Combines the preWinKickoffsL with preWinKickoffs data so it has both loss and win teams
+preWinKickoffs$Win <- rep(1, nrow(preWinKickoffs))
+preWinKickoffs <- preWinKickoffs %>% 
+  select(c(Date, Team, WinDiff, Team1RatingDiff, Win)) %>%
+  rename(TeamRatingDiff = Team1RatingDiff) %>% 
+  rbind(preWinKickoffsL) %>% 
+  arrange(desc(Date), Team)
+preWinKickoffs$Kickoff <- rep(1, nrow(preWinKickoffs))
+
+##Adds the Home team variable
+preHometeam <- read.csv(file="7-11home.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+preHometeam <- preHometeam %>% 
+  filter(At.Symbol == "@") %>% 
+  filter(!grepl("T", Result))
+preHometeam$Date <- format(mdy(preHometeam$Date), "%Y-%m-%d")
+
+preWinKickoffs <- preWinKickoffs %>% 
+  mutate(Home = 0)
+
+sizePreWinKickoffs = length(preWinKickoffs$Date)
+sizePreHometeam = length(preHometeam$Date)
+
+for(i in 1:sizePreWinKickoffs){
+  for (j in 1:sizePreHometeam){
+    if(preWinKickoffs$Date[i] == preHometeam$Date[j] & preWinKickoffs$Team[i] == preHometeam$Opp[j]){
+            preWinKickoffs$Home[i] = 1
+    }
+  }
+}
+```
+
+## Pre Rule Change Losses: 2007-2011 Seasons
+```{r}
+preLostKickoffs <- read.csv(file="07-11LostAppended.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+##Double-counts the data by taking the Opponents column and giving them a 0 for the Win binary variable
+preLostKickoffsL <- select(preLostKickoffs, c(Date, Opp, WinDiff, Team2RatingDiff))
+preLostKickoffsL$Win <- rep(0, nrow(preLostKickoffs))
+preLostKickoffsL <- preLostKickoffsL %>% 
+  rename(Team = Opp) %>% 
+  rename(TeamRatingDiff = Team2RatingDiff) %>% 
+  mutate(WinDiff = -WinDiff)
+
+##Combines the preLostKickoffsL with preLostKickoffs data so it has both loss and win teams
+preLostKickoffs$Win <- rep(1, nrow(preLostKickoffs))
+preLostKickoffs <- preLostKickoffs %>% 
+  select(c(Date, Team, WinDiff, Team1RatingDiff, Win)) %>%
+  rename(TeamRatingDiff = Team1RatingDiff) %>% 
+  rbind(preLostKickoffsL) %>% 
+  arrange(desc(Date), Team)
+preLostKickoffs$Kickoff <- rep(0, nrow(preLostKickoffs))
+
+##Adds the Home team variable
+preLostKickoffs <- preLostKickoffs %>% 
+  mutate(Home = 0)
+
+sizePreLostKickoffs = length(preLostKickoffs$Date)
+
+for(i in 1:sizePreLostKickoffs){
+  for (j in 1:sizePreHometeam){
+    if(preLostKickoffs$Date[i] == preHometeam$Date[j] & preLostKickoffs$Team[i] == preHometeam$Opp[j]){
+            preLostKickoffs$Home[i] = 1
+    }
+  }
+}
+```
+
+##Pre Rule Changed Combined for Wins and Losses
+```{r}
+preKickoffs <- rbind(preWinKickoffs, preLostKickoffs)
+preKickoffs <- preKickoffs %>% 
+  arrange(Date, Team)
+```
+
+##Putting Vegas Odds in for 2007-2011 Years
+```{r}
+preVegas <- read.csv(file="2007 - 2011 Vegas Odds.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+preVegas <- preVegas %>% 
+  filter(!grepl("T", preVegas$Result))
+preVegas$Date <- format(mdy(preVegas$Date), "%Y-%m-%d")
+
+preVegasUnder <- select(preVegas, c(Date, Opp, Spread))
+preVegasUnder <- preVegasUnder %>% 
+  mutate(Spread = -Spread) %>% 
+  rename(Tm = Opp)
+
+preVegas <- preVegas %>% 
+  select(c(Date, Tm, Spread)) %>% 
+  rbind(preVegasUnder) %>% 
+  arrange(Date, Tm)
+
+preKickoffs <- preKickoffs %>% 
+  mutate(preVegas$Spread) %>% 
+  rename("Spread" = "preVegas$Spread")
+```
+
+#Models
+##Post Binary Logit Model
+```{r}
+logit.post <- glm(Win ~ Home + Kickoff + Spread+WinDiff+TeamRatingDiff, 
+               data=postKickoffs, 
+               family=binomial(link="logit"))
+
+summary(logit.post)
+```
+
+##Pre Binary Logit Model
+```{r}
+logit.pre <- glm(Win ~ Home + Kickoff + Spread+WinDiff+TeamRatingDiff, 
+               data=preKickoffs, 
+               family=binomial(link="logit"))
+
+summary(logit.pre)
+```
