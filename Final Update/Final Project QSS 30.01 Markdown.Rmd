@@ -1,0 +1,614 @@
+---
+title: |
+  | \vspace{5cm} \LARGE{To the Strongest: An Investigation of the 2012 NFL Overtime Rule Change}
+author: "Rahul Kolluri, Zach Gottesman, Zach Johnson, John Cho"
+header-includes:
+    - \usepackage{setspace}\doublespacing
+date: "11/20/2019"
+output: pdf_document
+indent: true
+---
+
+\pagebreak
+
+```{r echo=FALSE, results='hide',message=FALSE}
+library(dplyr)
+library(lubridate)
+library(pscl)
+library(stringr)
+library(arm)
+library(stargazer)
+library(kableExtra)
+options(scipen = 999)
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Post Rule Change (12-16)
+
+post <- read.csv(file="12-16CombinedUsed.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+post <- post %>% 
+  filter(At.Symbol != "@") %>% 
+  filter(!grepl("T", Result)) %>% 
+  mutate(Win = grepl("W", Result)) %>% 
+  mutate(CoinWin = 0) %>% 
+  mutate(Post = 1) %>%
+  rename(Away = Opp) %>% 
+  rename(Home = Tm) %>% 
+  arrange(desc(Date), Home)
+
+post$Win[post$Win == "TRUE"] <- 1
+post$Win[post$Win == "FALSE"] <- 0
+for(i in 1:length(post$Date)){
+  if(post$OTToss[i] == post$Home[i]){
+    post$CoinWin[i] = 1
+  }
+}
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+postVegas <- read.csv(file="12-16VegasOdds.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+postVegas <- postVegas %>% 
+  filter(!grepl("T", postVegas$Result)) %>% 
+  mutate(Home = Tm) %>% 
+  mutate(Away = Opp)
+postVegas$Date <- format(mdy(postVegas$Date), "%Y-%m-%d")
+
+for(i in 1:length(postVegas$Date)){
+  if(postVegas$X[i] == "@"){
+    postVegas$Away[i] = postVegas$Tm[i]
+    postVegas$Home[i] = postVegas$Opp[i]
+    postVegas$Spread[i] = -postVegas$Spread[i]
+  }
+}
+
+postVegas <- postVegas %>% 
+  arrange(desc(Date), Home)
+post <- post %>% 
+  mutate(Vegas = postVegas$Spread) %>% 
+  mutate(Vegas = -Vegas)
+
+detach("package:dplyr", character.only = TRUE)
+library("dplyr", character.only = TRUE)
+post <- select(post, c(Date, Year, Home, Away, Win, Result, CoinWin, Post, WinDiff, CombinedRating, Vegas, 
+                       Week, Game, Day))
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Pre Rule Change (07-11)
+
+pre <- read.csv(file="07-11CombinedUsed.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+pre <- pre %>% 
+  filter(At.Symbol != "@") %>% 
+  filter(!grepl("T", Result)) %>% 
+  mutate(Win = grepl("W", Result)) %>% 
+  mutate(CoinWin = 0) %>% 
+  mutate(Post = 0) %>% 
+  rename(Away = Opp) %>% 
+  rename(Home = Tm) %>% 
+  arrange(desc(Date), Home)
+
+pre$CombinedRating <- round(pre$CombinedRating, digits = 4)
+
+pre$Win[pre$Win == "TRUE"] <- 1
+pre$Win[pre$Win == "FALSE"] <- 0
+for(i in 1:length(pre$Date)){
+  if(pre$OTToss[i] == pre$Home[i]){
+    pre$CoinWin[i] = 1
+  }
+}
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+preVegas <- read.csv(file="07-11VegasOdds.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+preVegas <- preVegas %>% 
+  filter(!grepl("T", preVegas$Result)) %>% 
+  mutate(Home = Tm) %>% 
+  mutate(Away = Opp)
+preVegas$Date <- format(mdy(preVegas$Date), "%Y-%m-%d")
+
+for(i in 1:length(preVegas$Date)){
+  if(preVegas$X[i] == "@"){
+    preVegas$Away[i] = preVegas$Tm[i]
+    preVegas$Home[i] = preVegas$Opp[i]
+    preVegas$Spread[i] = -preVegas$Spread[i]
+  }
+}
+
+preVegas <- preVegas %>% 
+  arrange(desc(Date), Home)
+pre <- pre %>% 
+  mutate(Vegas = preVegas$Spread) %>% 
+  mutate(Vegas = -Vegas)
+
+pre <- select(pre, c(Date, Year, Home, Away, Win, Result, CoinWin, Post, WinDiff, CombinedRating, Vegas, 
+                     Week, Game, Day))
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Combine the Post and Pre into Data
+data <- rbind(post, pre)
+data <- data %>% 
+  arrange(desc(Date), Home)
+```
+
+#1    Introduction
+
+&nbsp;&nbsp;&nbsp;&nbsp; On February 5, 2017, the New England Patriots met the Atlanta Falcons for Super Bowl LI in Houston, Texas. A highly anticipated matchup between future Hall-of-Famer Tom Brady (then seeking his 5th Lombardi trophy) and the reigning NFL MVP in Atlanta’s Matt Ryan, the game appeared to be all but decided when the Falcons took a 25-point lead in the third quarter. In a historic rally, however, New England stormed back to score 19 unanswered fourth-quarter points and force overtime. After winning the coin toss, the Patriots elected to take possession of the ball first. Brady then led his team down the field for a game-winning touchdown to running back James White, completing one of the most remarkable comebacks in NFL history. The game immediately elicited a firestorm of controversy from both Falcons supporters and fans league-wide. Many considered Ryan and coordinator Kyle Shanahan’s offense—hailed as one of the greatest in NFL history—to have been cheated out of a chance to defeat the Patriots by an unfavorable overtime coin flip. 
+
+Given high-profile cases as in Super Bowl LI, where dominant offenses can be relegated to the sidelines and unable to impact the outcome of overtime games, previous research has sought to determine if the overtime coin toss affects whether the “stronger” team wins these matches. In 2012, the NFL significantly overhauled their overtime rules in regular season play. Whereas teams could previously end the game on their first drive simply by kicking a field goal, the new rules stipulated that a touchdown was required to end the game on the first drive. A made field goal now allows the kicking team an opportunity to match or exceed the three points scored on the first possession by the receiving team. This new “first-to-six” format would theoretically reduce the advantage of the team first receiving the ball in overtime (almost always the winner of the overtime coin toss). 
+
+#2    Previous Work
+
+&nbsp;&nbsp;&nbsp;&nbsp; Our research investigated several academic sources studying both the effect of coin tosses on the outcome of overtime games and of the 2012 NFL rule change on negating the coin toss’ advantage. Komiss (2008) and Rosen and Wilson (2007) find significant advantages in choosing to receive the ball in overtime and that only a few teams in the sudden death era have chosen to kick after winning the coin flip. Leake and Pritchard (2012), Jones (2012), and Jones (2004) run Markov chain analyses estimating the decline of the receiving team’s win probability with the 2012 rule change in effect. Rosenfeld, Fisher, et. al (2010) use baseball’s “Pythagorean Model” to show a clear correlation between strong regular season win percentage and overtime performance. Lastly, Hadley et al. (2000) run a Poisson regression to evaluate the various non-coin toss values that determine NFL team strength. The paper found statistical significance for several offensive (first downs gained, completion %, yards per completion, made field goals) and defensive (% intercepted passes, sacks, punts forced) performance metrics, with coaching experience significantly adding to a team’s expected wins. 
+
+Bill Cosmo Komiss in his 2008 paper “All is Not Fair in NFL Overtime” uses a generalized least squares model to estimate the impact of having the first possession in overtime. He notes that that from 1994-2008, the first team on offense won 60.27% of all games (31.81% on first possession). With data from the 1994-2004 seasons, Komiss uses all possible outcomes of an overtime possession as parameters for the regression, finding a substantial 38.4% point swing between having the first or second possession and overtime win probability. 
+
+In the 2012 edition of the Mathematics Magazine, Chris Jones runs a Markov chain analysis on the effects of the new overtime rules. He defines 4 states: Team A (receiving team) or B (defending team) winning and Team A or B possessing the ball. Using all NFL data from the 2008 season (all possessions not ending in half/full-time), Jones estimates that the new rule would reduce the probability of the Team A winning on the receiving possession in 64% of overtime games to 52%.
+
+Michael A. Jones runs a similar Markov chain analysis of overtime games in the November 2004 College Mathematics Journal. His study compares two Markov chains: a four-state “old” format and a six-state “new” format (accounting for Team B’s ability to match a field goal). Jones concludes his research by stating that Team A was projected to win 59.9% of overtime games in sudden death and 52% under the “first-to-six” setup. He ultimately predicts that the new format would diminish the likelihood of the receiving team winning the first possession, potentially reducing the impact of the coin toss on the game’s result, and further predicts an increase in the number of tie games.
+
+Jacqueline Leake and Nicholas Pritchard’s 2016 paper uses another set of Markov chain  to assess the potential advantage of the coin toss in the new 2011-12 NFL overtime rules. Their findings note that up to 2016, only 11 overtime coin toss winners have ever chosen to go on defense. Using Markov chains with regular season data from the 2012 NFL season, they found that the estimated win probability for the receiving team falls from .560 to .519 in a regular season format (ties exist) and from .606 to .567 under the NFL playoff format (ties are impossible). Leake and Pritchard determine that the advantage of winning the coin toss was heavily reduced by the new format, but also the receiving team still holds the advantage. 
+
+In another study, Rosenfield, Fisher, Morris, and Fisher translates Bill James’ “Pythagorean Formula” from baseball to the NFL, measuring the impact of “team strength” on overtime win probability. The formula measures an “alpha” coefficient relating points scored and allowed against win percentage. Collecting 19 seasons of NFL data, the researchers calculated the “relative alpha” coefficient (overtime win % / regular season win %). The results of their analysis showed that the overtime winning percentage of teams that win 75% of their games (indicating a “strong” team) declines from 61.6% to 61.16% without the random coin toss, but cautioned that this is only a small overall effect on win probability. 
+
+#3    Research Design
+&nbsp;&nbsp;&nbsp;&nbsp; We posit that there are three categories of factors that affect the probability of a team winning. First, there’s the quality of teams playing. These are variables that encapsulate the skill level of the teams and assess who “should” win, all other factors held equal. For example, measures of scoring rate or points allowed indicate team quality. Second, there are variables that advantage one team or another, but occur randomly. An example here would be the coin toss in regulation or overtime. Winning this toss affords the choice of whether to kick or receive the ball first. However, this isn’t inherently unfair because either team has (at least in theory) an equal chance of winning that toss. Finally, there are variables that advantage a team, but do not occur randomly. For example, which team is playing at home. Although playing at home might confer an advantage, it is decided prior to kick off.
+
+Ideally, the rules for NFL football would reflect regard for these different types of variables. Team quality should have the biggest impact in picking the winner. Chance should be used as a mechanism for fairness in neutral decisions but its impact in picking the winner should be minimized. Predictable advantages are fine on a single-game level but should be evened out over the course of a season. For the most part, this occurs. Each team plays an even amount of home and away games during a season. Officials are drawn from a neutral pool rather than from local populations. Teams swap sides of the field every quarter. However, many fans have pointed to the overtime rules as an example where chance, in this case the overtime coin toss, gives too large an advantage to the receiving team in overtime.
+
+Given the aforementioned goals, it makes sense that the league would change the rules in an effort to mitigate the advantage of winning an overtime coin toss. The question, then, is whether it worked. If it did, results of overtime games after the rule change would be impacted more by team quality and less by chance. Predicted advantages would have more of an effect than prior to the rule change, but hopefully not as strong of an effect as that of team quality. 
+
+To determine this effect, we gathered data from each of the three categories. We scraped predominantly from pro-football-reference.com, using their Team Game Finder to filter for overtime games. We looked at only the regular season, in an effort to maintain at least relatively consistent stakes for each game. The added pressure of postseason games might distort teams’ performances. After the rule change, we looked at the 2012-2016 seasons. 2012 was the first season in which regular season games adhered to the updated rule. We stopped at 2016 because there was another rule change that shortened the maximum length of overtime to ten minutes rather than fifteen. We only wanted to study the effect of the 2012 rule and worried that this shortening might increase the number of ties and distort team’s decision making. Because we studied a five year sample of games after the rule change, we looked at a five year sample of games pre-rule change, in the 2007-2011 seasons. Keeping these periods proportional and relatively recent mitigates the confounding effect of changes over time in the way the game is played. In total, we collected a sample of 75 games before the rule change and 83 games after the rule change, for a combined sample size of 158 games, reduced to 152 when eliminating ties. 
+
+In the predicted advantage category, we keep track of which team was home and which was away. We don’t include other independent variables in this category because the home team serves as a proxy. There is not necessarily inherent value in playing at home. Rather, any impact it has stems from associated environmental variables. Examples include an increased familiarity with the stadium and its typical weather conditions, decreased travel time, ability to stay at permanent residences rather than hotels, and greater fan support. Using this proxy simplifies our model. 
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Chi-Sq test of independence of wins and coin wins
+wins <- table(data$CoinWin == 1, data$Win == 1)
+wins
+
+chisq.test(wins)
+```
+
+In the advantage-via-chance category, we look at who won the overtime coin toss. To reiterate: winning this coin toss means that the team has an opportunity to score and win on the first possession without the other offense even taking the field. We don’t include the regulation coin toss because the occurrence of overtime essentially starts the game anew. There is no advantage in overtime to having won the regulation coin toss. In our dataset, the home team wins the coin toss 46.71% of the time. This value adheres to our expectation that a fair coin toss would give roughly equivalent results. As an initial, simplistic test of our assumption that winning the coin toss increases chances of winning, we performed a chi-squared test on the two variables’ relationship. We include both pre-rule-change and post-rule-change observations. We end up with a chi-squared value of 0.011641 and a p-value of 0.9141. Given the distance from statistical significance, this result casts doubt onto the initial premise for this paper. A rule change can’t decrease the effect of the coin toss on winning if there was no significant effect in the first place.
+
+The team quality category presents significant difficulty and ambiguity. There is no objective way to measure exactly how “good” a team is because there’s no clear definition of what “good” means. Additionally, any definition one might give will be inherently influenced by the environmental and chance-related factors mentioned above. As such, we approached team quality in three different ways. 
+
+First, we looked at the differential between the teams in total wins over the course of the season in which the game was played. We calculate this differential as the wins of the home team minus the wins of the away team. For example, if the Steelers played at the Patriots, and the teams had 5 and 11 victories that season respectively, the win differential would be 6. If the teams played at the Steelers, the win differential would be -6. Inherent in this measure is the idea that a “good” team is simply a team that wins a lot of games, no matter how these games are won and who they are against. It also looks at team quality over the course of a full season, rather than just at that specific moment in time. 
+
+Second, we looked at differential in team rating. These ratings still look at the teams on a season-long level but consider other information than just wins. Pro-Football-Reference uses what it calls a “Simple Rating System” (SRS). Looking at season-long information, a team’s SRS value is the sum of its offensive rating (OSRS) and defensive rating (DSRS). That sum is also equivalent to a team’s margin of victory (MoV) plus its strength of schedule (SoS). An OSRS or DSRS value of 0.0 indicates a league average offensive rating. Anything positive indicates the team is better than league average. Anything negative indicates below league average. We calculate a combined-rating variable, defined as $(OSRS_{HomeTeam} - DSRS_{AwayTeam}) - (OSRS_{AwayTeam} - DSRS_{HomeTeam})$. 
+
+```{r echo=FALSE, include = FALSE,message=FALSE}
+#Means and Histograms of all independent and dependent variables
+summary(data$Win)
+summary(data$CoinWin)
+hist(data$WinDiff, main = "Histogram of Win Difference", xlab = "Win Difference")
+hist(data$CombinedRating, main = "Histogram of Combined Rating", xlab = "Combined Rating")
+hist(data$Vegas, main = "Histogram of Vegas Odds", xlab = "Point Spread (Positive)")
+```
+Third, we looked at the Vegas betting odds for each game. Vegas odds have the advantage of providing information about games during the specific week in time in which they were played. Injuries, coaching changes, preseason expectations, and team performance thus far all play into this determination. These odds are updated right up to the start of the game. We flipped the sign to make it consistent with our other variables. In our model, a vegas odds value of +3 means that the home team was favored to win by 3 points. We created histograms for all three of our continuous team quality variables, finding that each was approximately normal, found in the appendix. 
+
+With these variables, we constructed a binary logit link model. Binary logistic regression served our purposes well because we mapped a combination of continuous and categorical variables onto the probability of a binary result. Our dependent variable indicates whether or not the home team won the game. We filtered out ties in order to keep this variable binary and because there were relatively few of them (1 pre-rule-change and 5 post). Our independent variables are binary variables Post (whether a game was after the rule change) and CoinWin (indicating whether the home team won the OT coin toss) as well as a continuous variable for team quality. We created three different models, testing each of the three different measures of team quality: win differential, combined rating, and Vegas odds. We also include two interaction terms. The first interacts Post with CoinWin. The second interacts Post with the team quality variable. We used interaction terms because we are interested in whether or not the updated rule changed the effect that winning the coin toss and team quality had on winning the game. Let Y = probability that the home team wins, W = Post, X = team quality, Z = CoinWin, and ${\ast}$ indicate an interaction. Then our model can be expressed as Y = $\frac{\exp{(\beta_{0} + \beta_{1}W + \beta_{2}X + \beta_{3}Z + \beta_{4}W{\ast}X + \beta_{5}W{\ast}Z})}{1 + \exp{(\beta_{0} + \beta_{1}W + \beta_{2}X + \beta_{3}Z + \beta_{4}W{\ast}X + \beta_{5}W{\ast}Z})}$. The interactions imply that in the pre-world, the betas for team quality and CoinWin are $\beta_2$ and $\beta_3$. In the post-world, the interactions imply that the betas for team quality and CoinWin are $\beta_2$ + $\beta_4$ and $\beta_3$ + $\beta_5$, respectively. If $\beta_4$ or $\beta_5$ are statistically significant, then that indicates that the effect of CoinWin or team quality on winning the game changes based on whether the game occurred pre or post rule change.
+
+#4    Results
+```{r echo=FALSE, results='hide',message=FALSE}
+#Logit model using win differential for team quality
+logit.wins <- glm(Win ~ Post*WinDiff+ Post*CoinWin, 
+               data=data, 
+               family=binomial(link="logit"))
+
+summary(logit.wins)
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Logit model using combined rating for team quality
+logit.rating <- glm(Win ~ Post*CombinedRating+ Post*CoinWin, 
+               data=data, 
+               family=binomial(link="logit"))
+
+summary(logit.rating)
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Logit model using Vegas odds for team quality
+logit.vegas <- glm(Win ~ Post*Vegas+ Post*CoinWin, 
+               data=data, 
+               family=binomial(link="logit"))
+
+summary(logit.vegas)
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+#Table of Betas for all three logit models
+stargazer(logit.wins, logit.rating, logit.vegas,
+  title="Binary Logit Coefficients of Home Team Wins", 
+  dep.var.labels=c("Team Quality"),
+  column.labels =c("Win Diff", "Combined Rating", "Vegas Odds"),
+  covariate.labels=c("Post", "Win Difference", "Combined Rating", "Spread", "Coin Toss Win",
+  "Post*Win Difference", "Post*Combined Rating", "Post*Spread", "Post*Coin Toss Win", "Constant"),
+#omit.stat=c("LL","f"), 
+  font.size = "scriptsize", 
+  star.cutoffs = c(.05),
+  notes = "*p < .05",
+  star.char = "*",
+  notes.label = ("Note:"),
+  notes.append = FALSE,
+  header = FALSE,
+type = 'latex')
+```
+\begin{table}[!htbp] \centering 
+  \caption{Binary Logit Coefficients of Home Team Wins} 
+  \label{} 
+\scriptsize 
+\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{Team Quality} \\ 
+ & Win Diff & Combined Rating & Vegas Odds \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ Post & $-$0.191 & $-$0.087 & $-$0.039 \\ 
+  & (0.473) & (0.460) & (0.476) \\ 
+  & & & \\ 
+ Win Difference & 0.155$^{*}$ &  &  \\ 
+  & (0.064) &  &  \\ 
+  & & & \\ 
+ Combined Rating &  & 0.045 &  \\ 
+  &  & (0.032) &  \\ 
+  & & & \\ 
+ Spread &  &  & 0.060 \\ 
+  &  &  & (0.042) \\ 
+  & & & \\ 
+ Coin Toss Win & 0.023 & 0.091 & 0.116 \\ 
+  & (0.502) & (0.487) & (0.485) \\ 
+  & & & \\ 
+ Post*Win Difference & 0.010 &  &  \\ 
+  & (0.089) &  &  \\ 
+  & & & \\ 
+ Post*Combined Rating &  & $-$0.007 &  \\ 
+  &  & (0.044) &  \\ 
+  & & & \\ 
+ Post*Spread &  &  & $-$0.009 \\ 
+  &  &  & (0.063) \\ 
+  & & & \\ 
+ Post*Coin Toss Win & 0.134 & 0.019 & $-$0.101 \\ 
+  & (0.698) & (0.677) & (0.669) \\ 
+  & & & \\ 
+ Constant & 0.340 & 0.290 & 0.132 \\ 
+  & (0.329) & (0.322) & (0.316) \\ 
+  & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 152 & 152 & 152 \\ 
+Log Likelihood & $-$96.522 & $-$102.078 & $-$102.258 \\ 
+Akaike Inf. Crit. & 205.045 & 216.155 & 216.515 \\ 
+\hline 
+\hline \\[-1.8ex] 
+Note: & \multicolumn{3}{r}{*p < .05} \\ 
+\end{tabular} 
+\end{table} 
+
+After creating the three different binary logit models that vary by the team quality variable, which are all expressed in Table 1, it was determined that the interaction variables between Post and CoinWin and Post and WinDiff were not statistically significant. That makes it impossible to make conclusions about the effect of the rule change on the effect of coin toss win or team quality on the probability of winning the game.
+
+In the logit model that used win differentials as the measure for team quality, none of the independent variables are statistically significant except for the win differential variable. This means that only the win differential between the home team and the away team had a positive effect on the probability of winning the game. The other variables, such as being the home team, playing after the rule change and winning the coin toss all had no effect. Although no conclusions can be drawn from the non statistically significant variables, one can still analyze the signs of these variables to infer the effect that the variables may have had on the probability of winning. The intercept and coin win variables are positive, implying that being the home team and winning the coin toss might increase a team’s likelihood of winning. The post variable is negative, implying that playing after the rule change might decrease the home team’s likelihood of winning. The interaction variables are both positive, which implies that the win differential and winning the coin toss might both have more of an effect post-rule change.
+
+In the logit model that used combined rating as a measure for team quality, none of the variables at all are statistically significant, although the combined rating variable comes closest to statistical significance, reflecting the results shown above in the win differential logit model. The signs for all the variables are the same as above, except that the interaction variable between post and combined rating is negative, which implies that a team’s combined rating might have less of an effect of winning the game post-rule change. 
+
+Finally, in the logit model that used Vegas point spreads as a measure for team quality, none of the variables at all are statistically significant, although the Vegas point spreads does come closest to statistical significance just like the combined rating and win differential variables. The signs for all the variables other than both of the interaction variables stayed the same. The interaction between post and Vegas point spread is negative, which implies that a team’s point spread might have less of an effect of winning the game post-rule change. The interaction between post and coin win is also negative, which again implies that winning the coin toss might have less of an effect of winning the game post-rule change.
+
+To reiterate, however, that the only valid conclusion that can be made about any of the models is that the win differential between the home and away team has a positive effect on the home team winning a game. Any other variables are insufficient in predicting whether or not the home team wins. The rest of the results will only analyze the win difference logit model, as that was the only model that yielded any statistically significant variables.
+
+There are a couple of interesting things to note about the win differential logit model. First is that the coin win variable, although it is positive as expected, is not statistically significant. This goes against the initial presumption when writing the paper, which was that winning the coin toss in overtime would have a significant effect on whether that team won or not, which was also supported by other supplemental literature such as the Komiss paper. In the context of the example at the start of this paper, that means that it would not have made a difference if the Patriots had lost the coin toss and had to kick rather than receive, because our findings show that winning the coin toss does not have a statistically significant effect on win rate. Rather, what would have mattered the most in  Super Bowl LI would have been a measure of how much better the Patriots are at football than the Falcons (our models indicate that win differential is the only indicator of team quality that matters). It’s important to note, however, that this was a playoff game, so would not be included in our model. 
+
+```{r echo=FALSE, message=FALSE}
+m <- matrix(c("-","-","-",
+              "+*","+","+",
+              "+","+","+",
+              "+","-","-",
+              "+","+","-",
+              "+","+","+"), nrow = 6, byrow = TRUE)
+rownames(m) <- c("Post","Team Quality","CoinWin","Post:Team Quality","Post:CoinWin","Constant")
+colnames(m) <- c("Win Difference","Combined Rating","Vegas Odds")
+
+m %>% 
+  kable(caption = "Signs of Binary Logit Coefficients",
+        format = "latex") %>% 
+  kable_styling() %>% 
+  row_spec(4:5, bold = T, color = "black", background = "cyan")
+```
+
+The second interesting thing to note were the signs of the interaction variables. Although they were not statistically significant, if they were, they would have given mixed results about the initial hypotheses that the coin win variable would have less of an effect and that the team quality variable would have more of an effect post rule change. The interaction between post and win differential is positive in the win differential logit model. This implies that win differential might have a stronger effect on the probability of winning after the rule change, which is what the rule change was predicted to do. However, the interaction between post and coin win is also positive. This also implies that winning the coin toss has a stronger effect on the probability of winning after the rule change, which is the opposite of what the rule change was intended to do. Considering that the signs for the interaction variable changes for each logit model as seen in Table 2, it is more likely that there is no change in the effect of team quality or winning the coin toss on winning the game after the rule change. 
+
+```{r echo=FALSE, message=FALSE}
+results_pre <- vector()
+win_diff <- vector()
+
+a = -5
+b = 5
+for (i in a:b){
+  xb.list <- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+  xb.profile <- c(1, 0, i, 0, 0, 0) #you can change these to make a different profile
+  xb.logit <- c(logit.wins$coef[1], logit.wins$coef[2], logit.wins$coef[3],
+              logit.wins$coef[4], logit.wins$coef[5], logit.wins$coef[6])
+  xb.logit.out <- sum(xb.profile * xb.logit)
+  results_pre <-  append(results_pre, invlogit(xb.logit.out)) #this gives you the PROBABILITY not just the beta
+  win_diff <-  append(win_diff, i)
+}
+
+results_prect <- vector()
+for (i in a:b){
+  xb.list <- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+  xb.profile <- c(1, 0, i, 1, 0, 0) #you can change these to make a different profile
+  xb.logit <- c(logit.wins$coef[1], logit.wins$coef[2], logit.wins$coef[3],
+              logit.wins$coef[4], logit.wins$coef[5], logit.wins$coef[6])
+  xb.logit.out <- sum(xb.profile * xb.logit)
+  results_prect <-  append(results_prect, invlogit(xb.logit.out)) 
+}
+
+results_post <- vector()
+for (i in a:b){
+  xb.list <- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+  xb.profile <- c(1, 1, i, 0, 1, 1) #you can change these to make a different profile
+  xb.logit <- c(logit.wins$coef[1], logit.wins$coef[2], logit.wins$coef[3],
+              logit.wins$coef[4], logit.wins$coef[5], logit.wins$coef[6])
+  xb.logit.out <- sum(xb.profile * xb.logit)
+  results_post <-  append(results_post, invlogit(xb.logit.out)) 
+}
+
+results_postct <- vector()
+for (i in a:b){
+  xb.list <- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+  xb.profile <- c(1, 1, i, 1, 1, 1) #you can change these to make a different profile
+  xb.logit <- c(logit.wins$coef[1], logit.wins$coef[2], logit.wins$coef[3],
+              logit.wins$coef[4], logit.wins$coef[5], logit.wins$coef[6])
+  xb.logit.out <- sum(xb.profile * xb.logit)
+  results_postct <-  append(results_postct, invlogit(xb.logit.out)) 
+}
+
+pp_win <- data.frame(win_diff, results_pre, results_prect, results_post, results_postct)
+kable(pp_win, col.names = c("Win Diff", "Lose Coin Toss", "Win Coin Toss", 
+                            "Lose Coin Toss", "Win Coin Toss"),
+      caption = "Predicted Probabilities of Change in Win Difference",
+      digits = 4,
+      format = "latex") %>% 
+  kable_styling() %>% 
+  add_header_above(c(" ", "Pre Rule Change" = 2, "Post Rule Change" = 2))
+```
+
+Table 3 shows the changes in predicted probabilities of winning a game based on the increases in win differential, compared across a) winning the coin toss before the rule change and b) winning the coin toss after the rule change. As one might expect, a team with a -5 win differential has less than a 50% chance of winning the game, regardless of whether or not the game occurred before or after the rule change and whether the home team won or lost the coin toss. The predicted probabilities only change a little bit across the row, as a -5 win differential team that lost the coin toss before the rule change has a 39.30% chance of winning a game, while a -5 win differential team that won the coin toss after the rule change has a 38.73% chance of winning the game. As expected, those probabilities go up drastically for a +5 win differential team, as the same profile yields a 75.32% and a 74.87% chance of winning the game, respectively. There is only a very small variation in the percentages because the betas were very small to begin with (and not statistically significant), which meant that the changes in the profiles wouldn’t have a large effect on the predicted probabilities. 
+
+```{r echo=FALSE, results='hide',message=FALSE}
+windiff.beta <- logit.wins$coeff[3] + logit.wins$coeff[5]
+windiff.se <- sqrt(vcov(logit.wins)[3,3] + (1)^2*vcov(logit.wins)[5,5] + 2*(1)*vcov(logit.wins)[3,5])
+tvalwindiff <- windiff.beta/windiff.se
+pvalwindiff <- 2*pnorm(-abs(tvalwindiff))
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+cointoss.beta <- logit.wins$coeff[4] + logit.wins$coeff[6]
+cointoss.se <- sqrt(vcov(logit.wins)[4,4] + (1)^2*vcov(logit.wins)[6,6] + 2*(1)*vcov(logit.wins)[4,6])
+tvalcointoss <- cointoss.beta/cointoss.se
+pvalcointoss <- 2*pnorm(-abs(tvalcointoss))
+```
+
+```{r echo=FALSE, message=FALSE}
+df <- matrix(c(coef(summary(logit.wins))[4,1], coef(summary(logit.wins))[4,2],  
+               coef(summary(logit.wins))[4,3],coef(summary(logit.wins))[4,4],
+               cointoss.beta, cointoss.se, tvalcointoss, pvalcointoss,
+               coef(summary(logit.wins))[3,1], coef(summary(logit.wins))[3,2],
+               coef(summary(logit.wins))[3,3], coef(summary(logit.wins))[3,4],
+               windiff.beta, windiff.se, tvalwindiff, pvalwindiff), nrow = 4, byrow = TRUE)
+rownames(df) <- c("Pre Rule Change Coin Toss", "Post Rule Change Coin Toss",
+                  "Pre Rule Change Win Difference", "Post Rule Change Win Difference")
+colnames(df) <- c("Beta", "SE", "Z Value", "P-Value")
+
+kable(df,
+      caption = "Betas for Coin Toss and Win Difference Pre/Post Rule Change", 
+      format = "latex") %>% 
+  kable_styling()
+```
+
+Using the interaction variables, the betas for coin win and win differential were recalculated for the post-rule change and tested for statistical significance, the results of which are shown in Table 4. Just as in the pre-rule change world, the win differential variable for the post-rule change was positive and statistically significant, but greater than the pre-rule change win differential variable because of the positive sign of the interaction variable between the two. The results were the same for coin toss, as the post-rule change coin win variable was positive and not statistically significant, and similarly greater than the pre-rule change coin toss variable because of the same reason as above.
+\linebreak
+\linebreak
+
+```{r echo=FALSE, results='hide',message=FALSE}
+sim.data <- data.frame(CoinWin=mean(data$CoinWin),
+                       Post=rep(0, 31),
+                       WinDiff = seq(from=-15, to=15))
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+OutHats<-predict(logit.wins,se.fit=TRUE,newdata=sim.data)
+OutHatsUB<-OutHats$fit+(1.96*OutHats$se.fit)
+OutHatsLB<-OutHats$fit-(1.96*OutHats$se.fit)
+OutHats<-cbind(as.data.frame(OutHats),OutHatsUB,OutHatsLB)
+OutHats<-data.frame(lapply(OutHats,binomial(link="logit")$linkinv))
+```
+
+```{r echo=FALSE, message=FALSE}
+both<-cbind(sim.data,OutHats)
+plot(both$WinDiff,
+     both$fit,
+     t="l",
+     lwd=2,
+     ylim=c(0,1),
+     xlab="Win Difference",
+     ylab="Predicted Pr(Win)",
+     main = "Figure 1: Probabilities of Win Differences Pre Rule Change")
+lines(both$WinDiff,both$OutHatsUB,lty=2)
+lines(both$WinDiff,both$OutHatsLB,lty=2)
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+sim.data <- data.frame(CoinWin=mean(data$CoinWin),
+                       Post=rep(1, 31),
+                       WinDiff = seq(from=-15, to=15))
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+OutHats<-predict(logit.wins,se.fit=TRUE,newdata=sim.data)
+OutHatsUB<-OutHats$fit+(1.96*OutHats$se.fit)
+OutHatsLB<-OutHats$fit-(1.96*OutHats$se.fit)
+OutHats<-cbind(as.data.frame(OutHats),OutHatsUB,OutHatsLB)
+OutHats<-data.frame(lapply(OutHats,binomial(link="logit")$linkinv))
+```
+
+```{r echo=FALSE, message=FALSE}
+both<-cbind(sim.data,OutHats)
+plot(both$WinDiff,
+     both$fit,
+     t="l",
+     lwd=2,
+     ylim=c(0,1),
+     xlab="Win Difference",
+     ylab="Predicted Pr(Win)",
+     main = "Figure 2: Probabilities of Win Differences Post Rule Change")
+lines(both$WinDiff,both$OutHatsUB,lty=2)
+lines(both$WinDiff,both$OutHatsLB,lty=2)
+```
+
+These two graphs in Figures 1 and 2 shows the change in predicted probabilities from a hypothetical -15 win differential team to a +15 win differential team for both pre and post-rule change, showing a rise in predicted probability of winning the game as win differentials also rise. These graph approximates how a logit graph looks like, with tails at the ends of the graph at both p = 0 and p = 1. The graphs for before the rule change and after the rule change do not differ much as expected from the model, which was seen in the low values and non-statistical significance for the interaction variables. 
+
+```{r echo=FALSE, results='hide',message=FALSE}
+iv.list<- c("Intercept","Post", "WinDiff", "CoinWin",
+             "Post:WinDiff", "Post:CoinWin")
+logit.wins.beta <- c(logit.wins$coef[1],logit.wins$coef[2], logit.wins$coef[3],
+                  logit.wins$coef[4], logit.wins$coef[5],logit.wins$coef[6])
+logit.wins.se <- c(sqrt(vcov(logit.wins)[1,1]), sqrt(vcov(logit.wins)[2,2]),
+                sqrt(vcov(logit.wins)[3,3]), sqrt(vcov(logit.wins)[4,4]),
+                sqrt(vcov(logit.wins)[5,5]),sqrt(vcov(logit.wins)[6,6]))
+logit.wins.df <- data.frame(iv.list, logit.wins.beta, logit.wins.se)
+logit.wins.df$fd <- apply(logit.wins.df, 1, function(x){
+  invlogit(xb.logit.out + logit.wins.beta) - invlogit(xb.logit.out)} )
+logit.wins.df$fduci <- apply(logit.wins.df, 1, function(x){
+  invlogit(xb.logit.out + logit.wins.beta - 1.96*logit.wins.se) - invlogit(xb.logit.out)} )
+logit.wins.df$fdlci <- apply(logit.wins.df, 1, function(x){
+  invlogit(xb.logit.out + logit.wins.beta + 1.96*logit.wins.se) - invlogit(xb.logit.out)} )
+logit.wins.order <- logit.wins.df[order(logit.wins.beta), ]
+```
+
+```{r echo=FALSE, message=FALSE}
+library(Hmisc)
+errbar(logit.wins.order$iv.list, logit.wins.order$fd, logit.wins.order$fdlci, logit.wins.order$fduci,
+       add = FALSE,
+       ylab = "Predicted Probabilities",
+       main = "Figure 3: Plot of Probabilities for One Unit Change in Betas")
+abline(v=0, col="gray")
+```
+
+This airplane plot in Figure 3 shows the effect of a one unit change in betas on the predicted probabilities. The top line is just a replication of the post variable, and the intercept line is uninterpretable because there is no one unit change in the intercept variable, so those two lines should not be taken into consideration. For the other five variables, this airplane plot reflects the results of our logit model, with only the win differential variable not crossing 0, which indicates that only that variable is statistically significant when conducting the Wald test. One can also observe the WinDiff, Post:CoinWin and CoinWin variables being positive, which implies a one unit change in those variables (which are that the home team has one more win than the away team, the effect of coin win after the rule change, and winning the coin toss) all might have a positive effect on winning the game. The Post:WinDiff and Post variables are negative, which implies a one unit change in those variables (the effect of win differential after the rule change, and playing a game after the rule change) might have a negative effect on the probability of winning the game. 
+
+```{r echo=FALSE, results='hide',message=FALSE}
+set.seed(1234)
+rows <- sample(nrow(data))
+data.random <- data[rows, ]
+
+list <- seq(from = 1, to = 152, by = 15)
+list[11] = 152
+
+results <- vector()
+i_number <- vector()
+i = 1
+while(i <= 10){
+  i_number <- append(i_number, i)
+  if(i == 10){
+    data.random1 <- data.random[c(list[i]:list[i+1]),]
+    data.random2 <- data.random[c(1:list[i]-1),]
+  } else{
+    data.random1 <- data.random[c(list[i]:list[i+1]),]
+    data.random2 <- data.random[c(1:list[i]-1,(list[i+1]+1):length(data.random$Date)),]
+  }
+  logit.random <- glm(Win ~ Post*CoinWin+ Post*WinDiff, 
+               data=data.random2, 
+               family=binomial(link="logit"))
+  
+  sim.data <- data.frame(CoinWin=data.random1$CoinWin,
+                       Post=data.random1$Post,
+                       WinDiff=data.random1$WinDiff)
+  
+  OutHats<-as.data.frame(predict(logit.random,se.fit=TRUE,newdata=sim.data))
+  OutHats<-data.frame(lapply(OutHats,binomial(link="logit")$linkinv))
+  OutHats$fit[OutHats$fit >= .5] <- 1
+  OutHats$fit[OutHats$fit < .5] <- 0
+  truth <- summary(OutHats$fit == data.random1$Win)
+  truth <- suppressWarnings(as.numeric(truth))
+  truth <- truth[!is.na(truth)]
+  
+  truth <- truth[2]/(truth[1]+truth[2])
+  
+  results <- c(results, truth)
+  
+  i = i +1
+}
+
+mean(results)
+```
+
+Finally, different parts of the model were used to cross validate the logit model. 90% of the dataset was taken to fit the model, and then the model was used to predict wins or losses for the remaining 10%. These values were then compared with the actual results each time in order to get a percent correctly estimated. When the process was repeated for 10 different segments of the dataset, we found that the model correctly estimated the results on average 58.34% of the time, which is slightly better than chance. 
+
+#5    Confounds/Limitations
+
+&nbsp;&nbsp;&nbsp;&nbsp; Although our quality measure considers both offensive and defensive performance, other measures of performance may impact a team’s ability to perform well in overtime. For example, a team with strong leaders, such as a particularly strong coach or quarterback, may have a higher chance of success in the high-pressure environment of overtime. If these two omitted variables are positively correlated with the current team quality (teams with good quarterbacks and coaches are usually better) and if our assumption that strong leaders increase the probability of that team winning in overtime holds true, we are likely overestimating the significance of team quality.
+
+Additionally, despite modeling the short-term performance of each team using Vegas odds, we did not model momentum within a particular game. Perhaps a team is far ahead in the first half of a game, but performs poorly in the second half, allowing its opposition to force overtime. That team may then be less likely to perform well during overtime based on their poor performance at the end of regulation. Momentum measures could include the general momentum of a team (rate of scoring, recent turnovers, etc.) going into overtime and in-game events that can shift momentum and team quality, such as injuries and ejections to key players. If an additional momentum variable was positively correlated with team quality, which we find likely given that a better team may find it easier to gain momentum, and teams with more momentum win more often (the beta for the momentum variable is positive), omitting momentum would lead to an overestimate of the importance of team quality.
+
+ In general, including only Vegas odds, team win differential, and offensive and defensive ratings as proxies for team quality likely do not perfectly encapsulate actual team quality, creating errors in how team quality is measured. Errors here make the marginal effect of team quality on the probability of wins lower through the introduction of noise. Consider the example of combined rating. Because the team first in possession of the football (team A) has the ability to win the game on offense for that possession, the difference between team A’s offensive ability and its opponent’s defensive ability may be more impactful than team A’s DSRS versus its opponent’s OSRS. Thus, we may have diluted the team quality rating by including the second comparison of OSRS and DSRS, making our estimate of the importance of team quality more conservative. Consider also the example of win differential. Two 8-8 teams might have had vastly different schedule difficulties, invalidating our model’s estimation of them as equivalently skilled teams. 
+ 
+#6    Conclusion
+&nbsp;&nbsp;&nbsp;&nbsp; Despite the research of other authors and our initial premises, the win differential logit model found that winning the coin toss actually does not have a statistically significant effect on whether the home team wins the game or not in an overtime setting. Rather, it is probably other measures such as team quality that have a significant effect on the probability of winning. This lack of statistical significance for coin toss was hinted from the very beginning, as the chi-squared test that compared game wins and coin wins suggested that they were independent of each other. The logit model further confirmed that, but also interestingly suggested that the rule change that was designed to mitigate the effect of winning the coin toss also had no effect on either increasing the probability that the “better team” had in winning or decreasing the effect of winning the coin toss on winning the game. Our cross validation suggests that our model performed better than randomly predicting wins because it correctly predicted 59% of the games, but also leaves much room for improvement. Ultimately, the lack of most statistical significance for all of the variables implies that the outcome of overtime games are pretty random. They are determined in part by how much better one team is than the other, but the fact that the game went to overtime in the first place implies that now in the overtime setting, either team has a relatively even chance of winning. 
+
+In the future, it might be interesting to consider the reason why the number of ties went up from 1 to 6 after the rule change occurred, as Michael Jones wisely predicted in his 2004 paper when he predicted the potential effects of the overtime rule change. This difference might be statistically significant, but it would probably be difficult to make any conclusions because there were only a total of 6 tie games in a span of 10 years. Furthermore, it was useful that our model was simple and only included one measure for each factor of win (quality of team, random advantage and structural advantage) that was discussed in the research design. The simplicity allowed us to see clearly the relationship between each factor and the probability of winning a game. In the future, however, the model could be further refined by including other variables within the structural advantage factor, such as momentum or team leadership, to further refine our model and reduce potential for omitted variable bias.
+
+\pagebreak
+
+#References
+
+&nbsp;&nbsp;&nbsp;&nbsp;Braumoeller, Bear F. "Hypothesis Testing and Multiplicative Interaction Terms." International Organization 58, no. 4 (2004): 807-20. www.jstor.org/stable/3877804.
+ 
+Berry, William D., Jacquiline H.R. DeMeritt, and Justin Esarey. “Testing for Interaction in Binary Logit and Probit Models: Is a Product Term Essential?,” American Journal of Political Science, 54 (2010): 248-266. doi:10.1111/j.1540-5907.2009.00429.x
+ 
+Che, Yeon-Koo and Terrence Hendershott. "How to Divide the Possession of a Football?." Economics Letters 99, no. 3 (2008): 561-565.
+
+Davis, Scott. “The NFL's overtime rules once again prevented the most exciting scenario in a classic title game,” Business Insider.  Jan 20, 2019. Accessed on November 14, 2019, https://www.businessinsider.com/patriots-chiefs-afc-championship-ruined-nfl-overtime-rules-2019-1.
+ 
+Hadley, Lawrence, Marc Poitras, John Ruggiero, and Scott Knowles. "Performance Evaluation of National Football League Teams." Managerial and Decision Economics 21, no. 2 (2000): 63-70. www.jstor.org/stable/3108334. 
+ 
+Jones, Chris. "The New Rules for NFL Overtime." Mathematics Magazine 85, no. 4 (2012): 277-83. doi:10.4169/math.mag.85.4.277. Same as Michael Jones
+ 
+Jones, Chris. "A look at overtime in the NFL." Mathematics and Sports (2010).
+ 
+Jones, Michael A.  "Win, Lose, or Draw: A Markov Chain Analysis of Overtime in the National Football League." The College Mathematics Journal 35, no. 5 (2004): 330-36. doi:10.2307/4146842.
+ 
+Komiss, Bill Cosmo. “All is Not Fair in NFL Overtime.”  (October 16, 2008). https://8f7d1d6e-a-62cb3a1a-s-sites.googlegroups.com/site/wckomiss/Home/working-papers.
+
+Leake, Jacqueline and Nicholas Pritchard, “The Advantage of the Coin Toss for the New Overtime System in the National Football League,” The College Mathematics Journal 47, no. 1 (January 1, 2016): 2–9, https://doi.org/10.4169/college.math.j.47.1.2. 
+ 
+Rosenfeld, Jason W., Jake I. Fisher, Daniel Fisher and Carl Morris. “Predicting Overtime with the Pythagorean Formula,” Journal of Quantitative Analysis in Sports, 6(2) (2010), doi:10.2202/1559-0410.1244.
+ 
+Rosen, Peter A. and Rick L. Wilson, “An Analysis of Defense First Strategy in College Football Overtime Games.” Journal of Quantitative Analysis in Sports 3, no.2 (2007). doi: 10.2202/1559-04
+
+\pagebreak
+
+#Appendix
+```{r echo=FALSE, results='hide',message=FALSE}
+hist(data$WinDiff, main = "Histogram of Win Difference", xlab = "Win Difference")
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+hist(data$CombinedRating, main = "Histogram of Combined Rating", xlab = "Combined Rating")
+```
+
+```{r echo=FALSE, results='hide',message=FALSE}
+hist(data$Vegas, main = "Histogram of Vegas Odds", xlab = "Point Spread (Positive)")
+```
+
